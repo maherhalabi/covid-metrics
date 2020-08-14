@@ -1,9 +1,7 @@
-.root {
-    flex-grow: 1;
-}
-
 .container {
     margin: 50px 0;
+    display: flex;
+    width: 50%;
 }
 
 .card {
