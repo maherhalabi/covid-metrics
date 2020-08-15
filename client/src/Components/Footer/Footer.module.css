@@ -1,0 +1,18 @@
+.container {
+    display: flex;
+    align-items: center;
+    justify-items: space-around;
+    border-top: 2mm ridge rgb(128, 128, 128, .2);
+    border-width: 45%;
+    font-family: 'Source Serif Pro', serif;
+}
+
+.logo {
+    width: 41px;
+    height:40px;
+}
+
+.footerContent {
+    margin: 2em;
+}
+
