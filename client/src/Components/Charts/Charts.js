@@ -1,10 +1,12 @@
 import React, {useState, useEffect}  from 'react';
 import { fetchDailyData } from '../../api';
 import { Line, Bar } from 'react-chartjs-2';
+import { CSSTransition } from 'react-transition-group';
 
 import styles from './Charts.module.css';
 
 const Charts = ({ data: {confirmed, recovered, deaths}, country }) => {
+    
     const [dailyData, setDailyData] = useState([]);
 
     useEffect(() => {
@@ -13,7 +15,7 @@ const Charts = ({ data: {confirmed, recovered, deaths}, country }) => {
         }
         fetchAPI();
     }, []);
-    console.log(country)
+
     const lineChart = (
         dailyData.length
         ? (
@@ -24,6 +26,8 @@ const Charts = ({ data: {confirmed, recovered, deaths}, country }) => {
                     data: dailyData.map(({ confirmed }) => confirmed),
                     label: 'Infected',
                     borderColor: '#3333ff',
+                    backgroundColor: 'rgba(128, 128, 255, 0.1)',
+                    fontSize: 20,
                     fill: true
                 }, {
                     data: dailyData.map(({ deaths }) => deaths),
@@ -32,6 +36,13 @@ const Charts = ({ data: {confirmed, recovered, deaths}, country }) => {
                     backgroundColor: 'rgba(255, 0, 0, 0.5)',
                     fill: true
                 }],
+            }}
+            options={{
+                scales: {
+                    yAxes: [{ticks: {fontSize: 20, fontFamily: "'Playfair Display', serif", fontColor: '#000', fontStyle: '500'}}],
+                    xAxes: [{ticks: {fontSize: 20, fontFamily: "'Playfair Display', serif", fontColor: '#000', fontStyle: '500'}}],
+                    labels: [{ticks: {fontSize: 20, fontFamily: "'Playfair Display', serif", fontColor: '#000', fontStyle: '500'}}]
+                }
             }}
         />) : null
     );
@@ -52,7 +63,16 @@ const Charts = ({ data: {confirmed, recovered, deaths}, country }) => {
                 }}
                 options={{
                     legend: { display: false },
-                    title: { display: true, text: `Current info on ${country}`},
+                    title: { 
+                        display: true, 
+                        text: `Current info on ${country}`,
+                        fontSize: 20,
+                        fontFamily: `'Playfair Display', serif`
+                    },
+                    scales: {
+                        yAxes: [{ticks: {fontSize: 20, fontFamily: "'Playfair Display', serif", fontColor: '#000', fontStyle: '500'}}],
+                        xAxes: [{ticks: {fontSize: 20, fontFamily: "'Playfair Display', serif", fontColor: '#000', fontStyle: '500'}}]
+                    }
                 }}
             />
         ) : null
@@ -60,9 +80,9 @@ const Charts = ({ data: {confirmed, recovered, deaths}, country }) => {
 
 
     return (
-        <div className={styles.container}>
-            { country ? barChart : lineChart }
-        </div>
+            <div className={styles.container}>
+                { country ? barChart : lineChart }
+            </div>
     );
 }
 
