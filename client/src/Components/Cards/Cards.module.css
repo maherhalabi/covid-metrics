@@ -20,3 +20,39 @@
 .deaths {
     border-bottom: 10px solid rgba(255, 0, 0, 0.5);
 }
+
+.pastConfirmed {
+    transition: transform 3s;
+    color: red;
+    opacity: 1;
+	animation-name: fadeInOpacity;
+	animation-iteration-count: 1;
+	animation-timing-function: ease-in;
+	animation-duration: 1s;
+}
+
+.pastDeaths {
+    transition: transform 3s;
+    color: red;
+    opacity: 1;
+	animation-name: fadeInOpacity;
+	animation-iteration-count: 1;
+	animation-timing-function: ease-in;
+	animation-duration: 1s;
+}
+
+.arrowUp {
+    height: 20px;
+    width: 20px;
+    margin-left: 10px;
+    opacity: .7;
+}
+
+@keyframes fadeInOpacity {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}

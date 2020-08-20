@@ -39,13 +39,18 @@ export const fetchCountries = async () => {
     }
 }
 
-export const fetchPastData = async () => {
+export const fetchPastData = async (country) => {
+    let changeableUrl = url;
+        if(country) {
+            changeableUrl = `${url}/countries/${country}`;
+    }
+
     try {
         const { data } = await axios.get(`${url}/daily`);
         let selectedData = {
             pastConfirmed: data[data.length - 1].confirmed.total,
             pastRecovered: data[data.length - 1].recovered.total,
-            pastDeaths: data[data.length - 1].deaths.total,
+            pastDeaths: data[data.length - 1].deaths.total
         }
         return selectedData;
     } catch (error) {

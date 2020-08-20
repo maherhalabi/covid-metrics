@@ -2,11 +2,11 @@ import React from 'react';
 import CountUp from 'react-countup';
 import cx from 'classnames';
 import styles from './Cards.module.css';
-import { Card, CardContent, Typography, Grid, createMuiTheme, MuiThemeProvider, responsiveFontSizes, TablePagination } from '@material-ui/core';
+import { Card, CardContent, Typography, Grid, createMuiTheme, MuiThemeProvider } from '@material-ui/core';
 
-const Cards = ({data: {confirmed, recovered, deaths}, pastData: {pastConfirmed}}) => {
+const Cards = ({data: {confirmed, recovered, deaths}, pastData: {pastConfirmed, pastRecovered, pastDeaths}}) => {
     
-    if (!confirmed && !pastConfirmed) {
+    if (!confirmed) {
         return 'Loading...';
     }
 
@@ -16,22 +16,42 @@ const Cards = ({data: {confirmed, recovered, deaths}, pastData: {pastConfirmed}}
             fontSize: 20,
         }
     });
-    
-    console.log(pastConfirmed);
+
+    console.log(pastRecovered)
+    console.log(pastDeaths)
+
     const newCases = (type) => {
         let total = 0;
         if (type === confirmed) {
             total = confirmed.value - pastConfirmed;
-            console.log(total)
             return (
-                (pastConfirmed) ? (
-                <Typography variant="h6" > 
+                (pastConfirmed) ? ( //add styles for  number becomes 0 added cases: green arrow
+                <Typography variant="h6" className={styles.pastConfirmed}> 
+                    <CountUp start={0} end={total} duration={3} separator=","/>
+                    <img className={styles.arrowUp} src="https://www.freeiconspng.com/uploads/red-arrow-up-png-8.png"/>
+                </Typography>
+                ) : null
+            );
+        } else if (type === recovered) {
+            total = recovered.value - pastRecovered;
+            return (
+                (pastRecovered) ? (
+                <Typography variant="h6"> 
                     <CountUp start={0} end={total} duration={3} separator=","/>
                 </Typography>
                 ) : null
             );
+        } else if (type === deaths) {
+            total = deaths.value - pastDeaths;
+            return (
+                (pastDeaths) ? (
+                <Typography variant="h6" className={styles.pastDeaths}> 
+                    <CountUp start={0} end={total} duration={3} separator=","/>
+                    <img className={styles.arrowUp} src="https://www.freeiconspng.com/uploads/red-arrow-up-png-8.png"/>
+                </Typography>
+                ) : null
+            );
         }
-        return total;
     }
 
     return (
@@ -53,6 +73,7 @@ const Cards = ({data: {confirmed, recovered, deaths}, pastData: {pastConfirmed}}
                             <Typography variant="h5">
                                 <CountUp start={0} end={recovered.value} duration={3} separator=","/>
                             </Typography>
+                            
                         </CardContent>
                     </Grid>
                     <Grid item component={Card} xs={12} md={3} className={cx(styles.card, styles.deaths)}>
@@ -61,6 +82,7 @@ const Cards = ({data: {confirmed, recovered, deaths}, pastData: {pastConfirmed}}
                             <Typography variant="h5">
                                 <CountUp start={0} end={deaths.value} duration={3} separator=","/>
                             </Typography>
+                            {newCases(deaths)}
                         </CardContent>
                     </Grid>
                 </Grid>
