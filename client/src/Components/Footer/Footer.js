@@ -11,6 +11,12 @@ const Footer = () => {
             |
         </div>
         <div className={styles.footerContent}>
+            API by <a href="https://github.com/mathdroid/covid-19-api">Mathdroid</a>
+        </div>
+        <div>
+            |
+        </div>
+        <div className={styles.footerContent}>
             <a href="https://www.who.int/emergencies/diseases/novel-coronavirus-2019/donate">Donate</a>
         </div>
         <div>
