@@ -1,4 +1,5 @@
 import axios from 'axios';
+import moment from 'moment';
 
 const url = 'https://covid19.mathdro.id/api';
 
@@ -40,19 +41,21 @@ export const fetchCountries = async () => {
 }
 
 export const fetchPastData = async (country) => {
-    let changeableUrl = url;
-        if(country) {
-            changeableUrl = `${url}/countries/${country}`;
+    const dailyURL = `${url}/daily`;
+    let yesterday = moment().add(-1, 'days').format('M-DD-YYYY')
+    let changeableUrl = dailyURL;
+    if(country) {
+        changeableUrl = `${url}/daily/${yesterday}`;
     }
-
     try {
-        const { data } = await axios.get(`${url}/daily`);
+        console.log(changeableUrl)
+        const { data } = await axios.get(changeableUrl);
         let selectedData = {
             pastConfirmed: data[data.length - 1].confirmed.total,
             pastRecovered: data[data.length - 1].recovered.total,
             pastDeaths: data[data.length - 1].deaths.total
         }
-        return selectedData;
+        return data;
     } catch (error) {
         console.log(error);
     }

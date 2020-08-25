@@ -25,8 +25,7 @@ const Cards = ({data: {confirmed, recovered, deaths}, pastData: {pastConfirmed, 
             return (
                 (pastConfirmed) ? ( //add styles for  number becomes 0 added cases: green arrow
                 <Typography variant="h6" className={styles.pastConfirmed}> 
-                    <CountUp start={0} end={total} duration={3} separator=","/>
-                    <img className={styles.arrowUp} src="https://www.freeiconspng.com/uploads/red-arrow-up-png-8.png"/>
+                    +<CountUp start={0} end={total} duration={3} separator=","/>
                 </Typography>
                 ) : null
             );
@@ -35,7 +34,7 @@ const Cards = ({data: {confirmed, recovered, deaths}, pastData: {pastConfirmed, 
             return (
                 (pastRecovered) ? (
                 <Typography variant="h6"> 
-                    <CountUp start={0} end={total} duration={3} separator=","/>
+                    +<CountUp start={0} end={total} duration={3} separator=","/>
                 </Typography>
                 ) : null
             );
@@ -44,8 +43,7 @@ const Cards = ({data: {confirmed, recovered, deaths}, pastData: {pastConfirmed, 
             return (
                 (pastDeaths) ? (
                 <Typography variant="h6" className={styles.pastDeaths}> 
-                    <CountUp start={0} end={total} duration={3} separator=","/>
-                    <img className={styles.arrowUp} src="https://www.freeiconspng.com/uploads/red-arrow-up-png-8.png"/>
+                    +<CountUp start={0} end={total} duration={3} separator=","/>
                 </Typography>
                 ) : null
             );
