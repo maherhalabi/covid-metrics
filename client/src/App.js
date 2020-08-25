@@ -29,7 +29,7 @@ class App extends React.Component {
             <div className={styles.container}>
                 <Title />
                 <LastUpdated data={data}/>
-                <Cards data={data} pastData={pastData}/>
+                <Cards data={data} pastData={pastData} country={country}/>
                 <CountryPicker handleCountryChange={this.handleCountryChange}/>
                 <Charts data={data} country={country}/>
                 <Footer />

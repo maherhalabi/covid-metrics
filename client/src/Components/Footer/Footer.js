@@ -22,9 +22,6 @@ const Footer = () => {
         <div>
             |
         </div>
-        <div className={styles.footerContent}>
-            <a href="https://www.cdc.gov/coronavirus/2019-ncov/lab/faqs.html">More Info on COVID19</a>
-        </div>
         <div>
             |
         </div>
