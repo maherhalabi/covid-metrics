@@ -1,0 +1,17 @@
+{
+  "name": "COVID19-Tracker",
+  "version": "1.0.0",
+  "scripts": {
+    "client-install": "yarn install --prefix client",
+    "start": "node server.js",
+    "heroku-postbuild": "YARN_CONFIG_PRODUCTION=false yarn install --cwd client && yarn --cwd client build"
+  },
+  "main": "index.js",
+  "repository": "https://github.com/mohur/COVID19-Tracker",
+  "author": "mohur <m.ashrahfi@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "concurrently": "^5.3.0",
+    "express": "^4.17.1"
+  }
+}
