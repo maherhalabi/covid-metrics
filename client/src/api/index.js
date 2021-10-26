@@ -16,17 +16,17 @@ export const fetchHistoryData = async () => {
 
 console.log("HISTORY", fetchHistoryData());
 
-export const fetchCurrentWorldWideData = async () => {
+export const fetchCurrentWorldWideData = async (setState) => {
    try {
       const response = await axios.get(`${url}/all`).then((item) => {
          const data = item.data;
+         console.log("CURRENT WORLD", data.cases);
+         setState(data);
       });
    } catch (e) {
       console.log(e);
    }
 };
-
-console.log("CURRENT WORLDWIDE", fetchCurrentWorldWideData());
 
 export const fetchCurrentCountryData = async (country) => {
    try {

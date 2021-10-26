@@ -1,21 +1,10 @@
 import React from "react";
-import {
-   Cards,
-   Charts,
-   CountryPicker,
-   Title,
-   Footer,
-   LastUpdated,
-} from "./Components";
-import styles from "./App.module.css";
+import Header from "./Components/Header/Header";
+import Cards from "./Components/Cards/Cards";
+import Footer from "./Components/Footer/Footer";
+import "bootstrap/dist/css/bootstrap.css";
 
 class App extends React.Component {
-   state = {
-      data: {},
-      pastData: {},
-      country: "",
-   };
-
    // async componentDidMount() {
    //     const fetchedData = await fetchData();
    //     this.setState({ data: fetchedData});
@@ -32,13 +21,11 @@ class App extends React.Component {
    // }
 
    render() {
-      const { data, pastData, country } = this.state;
       return (
-         <div className={styles.container}>
-            <Title />
-            {/* <LastUpdated data={data}/>
-                <Cards data={data} pastData={pastData} country={country}/>
-                <CountryPicker handleCountryChange={this.handleCountryChange}/>
+         <div>
+            <Header />
+            <Cards />
+            {/* <CountryPicker handleCountryChange={this.handleCountryChange}/>
                 <Charts data={data} country={country}/> */}
             <Footer />
          </div>
