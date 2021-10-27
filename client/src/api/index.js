@@ -20,7 +20,6 @@ export const fetchCurrentWorldWideData = async (setState) => {
    try {
       const response = await axios.get(`${url}/all`).then((item) => {
          const data = item.data;
-         console.log("CURRENT WORLD", data.cases);
          setState(data);
       });
    } catch (e) {
@@ -28,19 +27,18 @@ export const fetchCurrentWorldWideData = async (setState) => {
    }
 };
 
-export const fetchCurrentCountryData = async (country) => {
+export const fetchCurrentCountryData = async (setState, country) => {
    try {
       const response = await axios
          .get(`${url}/countries/${country}`)
          .then((item) => {
             const data = item.data;
+            setState(data);
          });
    } catch (e) {
       console.log(e);
    }
 };
-
-console.log("CURRENT COUNTRY", fetchCurrentCountryData("Albania"));
 
 export const fetchVaccineWorldwideTotal = async () => {
    try {

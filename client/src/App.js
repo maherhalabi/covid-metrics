@@ -1,8 +1,9 @@
 import React from "react";
 import Header from "./Components/Header/Header";
-import Cards from "./Components/Cards/Cards";
+import Content from "./Components/Content/Content";
 import Footer from "./Components/Footer/Footer";
-import "bootstrap/dist/css/bootstrap.css";
+import DockLeft from "./Components/DockLeft/DockLeft";
+import { Container, Col, Row } from "react-bootstrap";
 
 class App extends React.Component {
    // async componentDidMount() {
@@ -22,11 +23,21 @@ class App extends React.Component {
 
    render() {
       return (
-         <div>
+         <div className="bg-light">
             <Header />
-            <Cards />
-            {/* <CountryPicker handleCountryChange={this.handleCountryChange}/>
-                <Charts data={data} country={country}/> */}
+            <Container>
+               <Row>
+                  <Col md={3} className="col-centered">
+                     <DockLeft />
+                  </Col>
+                  <Col
+                     md={9}
+                     style={{ display: "flex", justifyContent: "center" }}
+                  >
+                     <Content />
+                  </Col>
+               </Row>
+            </Container>
             <Footer />
          </div>
       );

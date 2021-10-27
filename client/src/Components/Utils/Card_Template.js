@@ -5,7 +5,7 @@ import { Card } from "react-bootstrap";
 const Card_Template = (props) => {
    return (
       <div>
-         <Card border="dark" style={{ width: "18rem" }}>
+         <Card border="dark" style={{ width: "12rem", marginBottom: "5px" }}>
             <Card.Header>{props.title}</Card.Header>
             <Card.Body>
                <Card.Title>{props.number}</Card.Title>
