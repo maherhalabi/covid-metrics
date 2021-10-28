@@ -1,10 +1,13 @@
 import React from "react";
 import CountryPicker from "./CountryPicker/CountryPicker";
 
-const DockLeft = () => {
+const DockLeft = ({ setChoice, setWorldwideToggle }) => {
    return (
       <div>
-         <CountryPicker />
+         <CountryPicker
+            setChoice={setChoice}
+            setWorldwideToggle={setWorldwideToggle}
+         />
       </div>
    );
 };

@@ -2,8 +2,7 @@
     display: flex;
     align-items: center;
     justify-items: space-around;
-    border-top: 2mm ridge rgb(128, 128, 128, .2);
-    border-width: 45%;
+    max-height: 10vh;
     font-family: 'Source Serif Pro', serif;
 }
 

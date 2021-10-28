@@ -5,10 +5,7 @@ import LastUpdated from "./LastUpdated/LastUpdated";
 
 const Header = () => {
    return (
-      <div
-         className="container align-center"
-         style={{ height: "100px", padding: 0, marginTop: "20px" }}
-      >
+      <div className="container align-center" style={{ height: "20vh" }}>
          <div className="row">
             <div className="col-sm">
                <Title />

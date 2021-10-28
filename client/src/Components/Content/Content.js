@@ -2,10 +2,11 @@ import React from "react";
 import Cards from "./Cards/Cards";
 import Charts from "./Charts/Charts";
 
-const Content = () => {
+const Content = ({ choice, worldwideToggle }) => {
+
    return (
       <div>
-         <Cards />
+         <Cards choice={choice} worldwideToggle={worldwideToggle} />
          <Charts />
       </div>
    );

@@ -8,45 +8,51 @@ import {
 import { countries } from "../../Utils/Arrays & Objects/Countries";
 import CountryPicker from "../../DockLeft/CountryPicker/CountryPicker";
 
-const Cards = () => {
+const Cards = ({ choice, worldwideToggle }) => {
    const [worlwideData, setWorldwideData] = useState(0);
    const [countryData, setCountryData] = useState(0);
 
    useEffect(() => {
-      fetchCurrentWorldWideData(setWorldwideData);
-      fetchCurrentCountryData(setCountryData, "USA");
-   }, []);
+      if (!worldwideToggle) {
+         fetchCurrentCountryData(setCountryData, choice);
+      } else {
+         fetchCurrentWorldWideData(setWorldwideData);
+      }
+   }, [choice]);
 
    const dataList = [
-      //WORLDWIDE CASES DATA
       {
          title: "Active Cases",
-         number: worlwideData.active,
+         worlwideNumber: worlwideData.active,
+         countryNumber: countryData.active,
       },
       {
          title: "Total Cases",
-         number: worlwideData.cases,
+         worlwideNumber: worlwideData.cases,
+         countryNumber: countryData.cases,
       },
       {
          title: "Recovered",
-         number: worlwideData.recovered,
+         worlwideNumber: worlwideData.recovered,
+         countryNumber: countryData.recovered,
       },
       {
          title: "Deaths",
-         number: worlwideData.deaths,
+         worlwideNumber: worlwideData.deaths,
+         countryNumber: countryData.deaths,
       },
    ];
 
    return (
       <div>
          <div style={{ width: "100%" }}>
-            <Row>
+            <Row style={{ display: "flex", justifyContent: "space-between" }}>
                {dataList.map((dataItem) => {
                   return (
                      <Col md={3}>
                         <Card_Template
                            title={dataItem.title}
-                           number={dataItem.number}
+                           number={dataItem.worlwideNumber}
                         />
                      </Col>
                   );
