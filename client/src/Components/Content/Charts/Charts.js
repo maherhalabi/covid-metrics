@@ -11,31 +11,54 @@ import {
    Legend,
    Line,
 } from "recharts";
-import { fetchHistoryData } from "../../../api";
+import { fetchHistoryData, fetchCountryHistoryData } from "../../../api";
 
 const Chart = ({ worldwideData, countryData, choice, worldwideToggle }) => {
-   const [history, setHistory] = useState({
+   const [worldwideHistory, setWorldwideHistory] = useState({
       cases: {},
       deaths: {},
       recovered: {},
    });
 
+   const [countryHistory, setCountryHistory] = useState({
+      timeline: {
+         cases: {},
+         deaths: {},
+         recovered: {},
+      },
+   });
+
    useEffect(() => {
       if (!worldwideToggle) {
+         fetchCountryHistoryData(setCountryHistory, choice);
       } else {
-         fetchHistoryData(setHistory);
+         fetchHistoryData(setWorldwideHistory);
       }
    }, [choice]);
 
-   const casesTimeline = Object.entries(history.cases).map(([key, value]) => {
+   const casesTimeline = Object.entries(worldwideHistory.cases).map(
+      ([key, value]) => {
+         return { date: key, number: value };
+      }
+   );
+
+   const deathsTimeline = Object.entries(worldwideHistory.deaths).map(
+      ([key, value]) => {
+         return { date: key, number: value };
+      }
+   );
+
+   const countryCasesTimeline = Object.entries(
+      countryHistory.timeline.cases
+   ).map(([key, value]) => {
       return { date: key, number: value };
    });
 
-   const deathsTimeline = Object.entries(history.deaths).map(([key, value]) => {
+   const countryDeathsTimeline = Object.entries(
+      countryHistory.timeline.deaths
+   ).map(([key, value]) => {
       return { date: key, number: value };
    });
-
-   console.log("TRANSFORMED", casesTimeline);
 
    return (
       <div>
@@ -44,7 +67,7 @@ const Chart = ({ worldwideData, countryData, choice, worldwideToggle }) => {
             <AreaChart
                width={500}
                height={400}
-               data={casesTimeline}
+               data={worldwideToggle ? casesTimeline : countryCasesTimeline}
                margin={{
                   top: 10,
                   right: 0,
@@ -69,7 +92,7 @@ const Chart = ({ worldwideData, countryData, choice, worldwideToggle }) => {
             <AreaChart
                width={500}
                height={400}
-               data={deathsTimeline}
+               data={worldwideToggle ? deathsTimeline : countryDeathsTimeline}
                margin={{
                   top: 10,
                   right: 0,
