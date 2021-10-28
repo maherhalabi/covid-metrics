@@ -1,87 +1,95 @@
 import React, { useState, useEffect } from "react";
-// import { fetchDailyData } from "../../api";
-import { Line, Bar } from "react-chartjs-2";
-import { CSSTransition } from "react-transition-group";
+import {
+   AreaChart,
+   Area,
+   XAxis,
+   YAxis,
+   CartesianGrid,
+   Tooltip,
+   ResponsiveContainer,
+   LineChart,
+   Legend,
+   Line,
+} from "recharts";
+import { fetchHistoryData } from "../../../api";
 
-import styles from "./Charts.module.css";
+const Chart = ({ worldwideData, countryData, choice, worldwideToggle }) => {
+   const [history, setHistory] = useState({
+      cases: {},
+      deaths: {},
+      recovered: {},
+   });
 
-const Charts = () => {
-   // const [dailyData, setDailyData] = useState([]);
+   useEffect(() => {
+      if (!worldwideToggle) {
+      } else {
+         fetchHistoryData(setHistory);
+      }
+   }, [choice]);
 
-   // useEffect(() => {
-   //     const fetchAPI = async () => {
-   //         setDailyData(await fetchDailyData());
-   //     }
-   //     fetchAPI();
-   // }, []);
+   const casesTimeline = Object.entries(history.cases).map(([key, value]) => {
+      return { date: key, number: value };
+   });
 
-   // const lineChart = (
-   //     dailyData.length
-   //     ? (
-   //         <Line
-   //         data={{
-   //             labels: dailyData.map(({ date }) => date),
-   //             datasets: [{
-   //                 data: dailyData.map(({ confirmed }) => confirmed),
-   //                 label: 'Infected',
-   //                 borderColor: '#3333ff',
-   //                 backgroundColor: 'rgba(128, 128, 255, 0.1)',
-   //                 fontSize: 20,
-   //                 fill: true
-   //             }, {
-   //                 data: dailyData.map(({ deaths }) => deaths),
-   //                 label: 'Deaths',
-   //                 borderColor: 'red',
-   //                 backgroundColor: 'rgba(255, 0, 0, 0.5)',
-   //                 fill: true
-   //             }],
-   //         }}
-   //         options={{
-   //             scales: {
-   //                 yAxes: [{ticks: {fontSize: 20, fontFamily: "'Playfair Display', serif", fontColor: '#000', fontStyle: '500'}}],
-   //                 xAxes: [{ticks: {fontSize: 20, fontFamily: "'Playfair Display', serif", fontColor: '#000', fontStyle: '500'}}],
-   //                 labels: [{ticks: {fontSize: 20, fontFamily: "'Playfair Display', serif", fontColor: '#000', fontStyle: '500'}}]
-   //             }
-   //         }}
-   //     />) : null
-   // );
-   // const barChart = (
-   //     confirmed ? (
-   //         <Bar
-   //             data={{
-   //                 labels:
-   //                     ['Infected', 'Recovered', 'Deaths'],
-   //                 datasets: [{
-   //                     backgroundColor: [
-   //                         'rgba(0, 0, 255, 0.5)',
-   //                         'rgba(0, 255, 0, 0.5)',
-   //                         'rgba(255, 0, 0, 0.5)',
-   //                     ],
-   //                     data: [confirmed.value, recovered.value, deaths.value]
-   //                 }]
-   //             }}
-   //             options={{
-   //                 legend: { display: false },
-   //                 title: {
-   //                     display: true,
-   //                     text: `Current info on ${country}`,
-   //                     fontSize: 20,
-   //                     fontFamily: `'Playfair Display', serif`
-   //                 },
-   //                 scales: {
-   //                     yAxes: [{ticks: {fontSize: 20, fontFamily: "'Playfair Display', serif", fontColor: '#000', fontStyle: '500'}}],
-   //                     xAxes: [{ticks: {fontSize: 20, fontFamily: "'Playfair Display', serif", fontColor: '#000', fontStyle: '500'}}]
-   //                 }
-   //             }}
-   //         />
-   //     ) : null
-   // )
+   const deathsTimeline = Object.entries(history.deaths).map(([key, value]) => {
+      return { date: key, number: value };
+   });
+
+   console.log("TRANSFORMED", casesTimeline);
 
    return (
-      <div className={styles.container}>
-         {/* { country ? barChart : lineChart } */}
+      <div>
+         <h4>Cases</h4>
+         <ResponsiveContainer width="100%" height={200}>
+            <AreaChart
+               width={500}
+               height={400}
+               data={casesTimeline}
+               margin={{
+                  top: 10,
+                  right: 0,
+                  left: 35,
+                  bottom: 0,
+               }}
+            >
+               <CartesianGrid strokeDasharray="3 3" />
+               <XAxis dataKey="date" interval={76} />
+               <YAxis />
+               <Tooltip />
+               <Area
+                  type="monotone"
+                  dataKey="number"
+                  stroke="#8884d8"
+                  fill="#8884d8"
+               />
+            </AreaChart>
+         </ResponsiveContainer>
+         <h4>Deaths</h4>
+         <ResponsiveContainer width="100%" height={200}>
+            <AreaChart
+               width={500}
+               height={400}
+               data={deathsTimeline}
+               margin={{
+                  top: 10,
+                  right: 0,
+                  left: 35,
+                  bottom: 0,
+               }}
+            >
+               <CartesianGrid strokeDasharray="3 3" />
+               <XAxis dataKey="date" interval={76} />
+               <YAxis />
+               <Tooltip />
+               <Area
+                  type="monotone"
+                  dataKey="number"
+                  stroke="#8884d8"
+                  fill="#8884d8"
+               />
+            </AreaChart>
+         </ResponsiveContainer>
       </div>
    );
 };
-
-export default Charts;
+export default Chart;

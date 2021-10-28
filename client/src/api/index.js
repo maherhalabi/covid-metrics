@@ -4,36 +4,37 @@ import moment from "moment";
 const url = "https://disease.sh/v3/covid-19";
 
 //argument must include [cases, recovered, deaths] daily globally.
-export const fetchHistoryData = async () => {
+export const fetchHistoryData = async (useState) => {
    try {
-      const response = await axios.get(`${url}/historical/all`).then((item) => {
-         const data = item.data;
-      });
+      const response = await axios
+         .get(`${url}/historical/all?lastdays=all`)
+         .then((item) => {
+            const data = item.data;
+            useState(data);
+         });
    } catch (e) {
       console.log(e);
    }
 };
 
-console.log("HISTORY", fetchHistoryData());
-
-export const fetchCurrentWorldWideData = async (setState) => {
+export const fetchCurrentWorldWideData = async (useState) => {
    try {
       const response = await axios.get(`${url}/all`).then((item) => {
          const data = item.data;
-         setState(data);
+         useState(data);
       });
    } catch (e) {
       console.log(e);
    }
 };
 
-export const fetchCurrentCountryData = async (setState, country) => {
+export const fetchCurrentCountryData = async (useState, country) => {
    try {
       const response = await axios
          .get(`${url}/countries/${country}`)
          .then((item) => {
             const data = item.data;
-            setState(data);
+            useState(data);
          });
    } catch (e) {
       console.log(e);

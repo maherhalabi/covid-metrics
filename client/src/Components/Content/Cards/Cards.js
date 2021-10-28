@@ -8,10 +8,14 @@ import {
 import { countries } from "../../Utils/Arrays & Objects/Countries";
 import CountryPicker from "../../DockLeft/CountryPicker/CountryPicker";
 
-const Cards = ({ choice, worldwideToggle }) => {
-   const [worlwideData, setWorldwideData] = useState(0);
-   const [countryData, setCountryData] = useState(0);
-
+const Cards = ({
+   choice,
+   worldwideToggle,
+   worldwideData,
+   setWorldwideData,
+   countryData,
+   setCountryData,
+}) => {
    useEffect(() => {
       if (!worldwideToggle) {
          fetchCurrentCountryData(setCountryData, choice);
@@ -23,22 +27,22 @@ const Cards = ({ choice, worldwideToggle }) => {
    const dataList = [
       {
          title: "Active Cases",
-         worlwideNumber: worlwideData.active,
+         worldwideNumber: worldwideData.active,
          countryNumber: countryData.active,
       },
       {
          title: "Total Cases",
-         worlwideNumber: worlwideData.cases,
+         worldwideNumber: worldwideData.cases,
          countryNumber: countryData.cases,
       },
       {
          title: "Recovered",
-         worlwideNumber: worlwideData.recovered,
+         worldwideNumber: worldwideData.recovered,
          countryNumber: countryData.recovered,
       },
       {
          title: "Deaths",
-         worlwideNumber: worlwideData.deaths,
+         worldwideNumber: worldwideData.deaths,
          countryNumber: countryData.deaths,
       },
    ];
@@ -48,11 +52,18 @@ const Cards = ({ choice, worldwideToggle }) => {
          <div style={{ width: "100%" }}>
             <Row style={{ display: "flex", justifyContent: "space-between" }}>
                {dataList.map((dataItem) => {
-                  return (
+                  return worldwideToggle ? (
                      <Col md={3}>
                         <Card_Template
                            title={dataItem.title}
-                           number={dataItem.worlwideNumber}
+                           number={dataItem.worldwideNumber}
+                        />
+                     </Col>
+                  ) : (
+                     <Col md={3}>
+                        <Card_Template
+                           title={dataItem.title}
+                           number={dataItem.countryNumber}
                         />
                      </Col>
                   );

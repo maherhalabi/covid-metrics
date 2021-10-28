@@ -21,7 +21,8 @@
     "react-scripts": "3.4.3",
     "react-strap": "^0.0.1",
     "react-transition-group": "^4.4.1",
-    "reactstrap": "^8.5.1"
+    "reactstrap": "^8.5.1",
+    "recharts": "^2.1.6"
   },
   "scripts": {
     "predeploy": "yarn run build",

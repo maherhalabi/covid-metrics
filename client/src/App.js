@@ -8,20 +8,32 @@ import { Container, Col, Row } from "react-bootstrap";
 const App = () => {
    const [choice, setChoice] = useState("Worldwide");
    const [worldwideToggle, setWorldwideToggle] = useState(true);
+   const [title, setTitle] = useState("Worldwide");
+
+   const [worldwideData, setWorldwideData] = useState(0);
+   const [countryData, setCountryData] = useState(0);
 
    return (
       <div className="bg-light">
-         <Header />
+         <Header title={title} />
          <Container>
             <Row>
                <Col md={3} className="col-centered">
                   <DockLeft
                      setChoice={setChoice}
+                     setTitle={setTitle}
                      setWorldwideToggle={setWorldwideToggle}
                   />
                </Col>
                <Col md={9}>
-                  <Content choice={choice} worldwideToggle={worldwideToggle} />
+                  <Content
+                     choice={choice}
+                     worldwideToggle={worldwideToggle}
+                     worldwideData={worldwideData}
+                     setWorldwideData={setWorldwideData}
+                     countryData={countryData}
+                     setCountryData={setCountryData}
+                  />
                </Col>
             </Row>
          </Container>

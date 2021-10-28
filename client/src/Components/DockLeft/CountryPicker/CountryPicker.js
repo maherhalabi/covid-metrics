@@ -2,9 +2,10 @@ import React from "react";
 import { ListGroup } from "react-bootstrap";
 import { countries } from "../../Utils/Arrays & Objects/Countries";
 
-const CountryPicker = ({ setChoice, setWorldwideToggle }) => {
+const CountryPicker = ({ setChoice, setWorldwideToggle, setTitle }) => {
    const handleClick = (e) => {
       setChoice(e.target.innerText);
+      setTitle(e.target.innerText);
       let isWorldwide = e.target.innerText == "Worldwide";
       console.log("CHECK WORLD", isWorldwide);
       if (isWorldwide) {
