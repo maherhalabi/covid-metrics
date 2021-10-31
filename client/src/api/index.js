@@ -4,43 +4,55 @@ import moment from "moment";
 const url = "https://disease.sh/v3/covid-19";
 
 //argument must include [cases, recovered, deaths] daily globally.
-export const fetchHistoryData = async () => {
-   try {
-      const response = await axios.get(`${url}/historical/all`).then((item) => {
-         const data = item.data;
-      });
-   } catch (e) {
-      console.log(e);
-   }
-};
-
-console.log("HISTORY", fetchHistoryData());
-
-export const fetchCurrentWorldWideData = async (setState) => {
-   try {
-      const response = await axios.get(`${url}/all`).then((item) => {
-         const data = item.data;
-         console.log("CURRENT WORLD", data.cases);
-         setState(data);
-      });
-   } catch (e) {
-      console.log(e);
-   }
-};
-
-export const fetchCurrentCountryData = async (country) => {
+export const fetchHistoryData = async (useState) => {
    try {
       const response = await axios
-         .get(`${url}/countries/${country}`)
+         .get(`${url}/historical/all?lastdays=all`)
          .then((item) => {
             const data = item.data;
+            useState(data);
          });
    } catch (e) {
       console.log(e);
    }
 };
 
-console.log("CURRENT COUNTRY", fetchCurrentCountryData("Albania"));
+export const fetchCountryHistoryData = async (useState, country) => {
+   try {
+      const response = await axios
+         .get(`${url}/historical/${country}?lastdays=all`)
+         .then((item) => {
+            const data = item.data;
+            useState(data);
+         });
+   } catch (e) {
+      console.log(e);
+   }
+};
+
+export const fetchCurrentWorldWideData = async (useState) => {
+   try {
+      const response = await axios.get(`${url}/all`).then((item) => {
+         const data = item.data;
+         useState(data);
+      });
+   } catch (e) {
+      console.log(e);
+   }
+};
+
+export const fetchCurrentCountryData = async (useState, country) => {
+   try {
+      const response = await axios
+         .get(`${url}/countries/${country}`)
+         .then((item) => {
+            const data = item.data;
+            useState(data);
+         });
+   } catch (e) {
+      console.log(e);
+   }
+};
 
 export const fetchVaccineWorldwideTotal = async () => {
    try {

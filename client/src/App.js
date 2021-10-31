@@ -1,36 +1,45 @@
-import React from "react";
+import React, { useState } from "react";
 import Header from "./Components/Header/Header";
-import Cards from "./Components/Cards/Cards";
+import Content from "./Components/Content/Content";
 import Footer from "./Components/Footer/Footer";
-import "bootstrap/dist/css/bootstrap.css";
+import DockLeft from "./Components/DockLeft/DockLeft";
+import { Container, Col, Row } from "react-bootstrap";
 
-class App extends React.Component {
-   // async componentDidMount() {
-   //     const fetchedData = await fetchData();
-   //     this.setState({ data: fetchedData});
+const App = () => {
+   const [choice, setChoice] = useState("Worldwide");
+   const [worldwideToggle, setWorldwideToggle] = useState(true);
+   const [title, setTitle] = useState("Worldwide");
 
-   //     const fetchedPastData = await fetchPastData();
-   //     this.setState({ pastData: fetchedPastData });
-   // }
+   const [worldwideData, setWorldwideData] = useState(0);
+   const [countryData, setCountryData] = useState(0);
 
-   // handleCountryChange = async(country) => {
-   //     const fetchedData = await fetchData(country);
-   //     const fetchedPastData = await fetchPastData(country);
-   //     this.setState({ data: fetchedData, country: country});
-   //     console.log(fetchedPastData);
-   // }
-
-   render() {
-      return (
-         <div>
-            <Header />
-            <Cards />
-            {/* <CountryPicker handleCountryChange={this.handleCountryChange}/>
-                <Charts data={data} country={country}/> */}
-            <Footer />
-         </div>
-      );
-   }
-}
+   return (
+      <div className="bg-light">
+         <Header title={title} />
+         <Container>
+            <Row>
+               <Col md={3} className="col-centered">
+                  <DockLeft
+                     setChoice={setChoice}
+                     setTitle={setTitle}
+                     setWorldwideToggle={setWorldwideToggle}
+                  />
+               </Col>
+               <Col md={9}>
+                  <Content
+                     choice={choice}
+                     worldwideToggle={worldwideToggle}
+                     worldwideData={worldwideData}
+                     setWorldwideData={setWorldwideData}
+                     countryData={countryData}
+                     setCountryData={setCountryData}
+                  />
+               </Col>
+            </Row>
+         </Container>
+         <Footer />
+      </div>
+   );
+};
 
 export default App;
