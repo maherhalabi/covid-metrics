@@ -11,6 +11,7 @@ import {
    Legend,
    Line,
 } from "recharts";
+import Line_Chart_Template from "../../Utils/Line_Chart_Template";
 import { fetchHistoryData, fetchCountryHistoryData } from "../../../api";
 
 const Chart = ({ worldwideData, countryData, choice, worldwideToggle }) => {
@@ -62,56 +63,22 @@ const Chart = ({ worldwideData, countryData, choice, worldwideToggle }) => {
 
    return (
       <div>
-         <h4>Cases</h4>
-         <ResponsiveContainer width="100%" height={200}>
-            <AreaChart
-               width={500}
-               height={400}
-               data={worldwideToggle ? casesTimeline : countryCasesTimeline}
-               margin={{
-                  top: 10,
-                  right: 0,
-                  left: 35,
-                  bottom: 0,
-               }}
-            >
-               <CartesianGrid strokeDasharray="3 3" />
-               <XAxis dataKey="date" interval={76} />
-               <YAxis />
-               <Tooltip />
-               <Area
-                  type="monotone"
-                  dataKey="number"
-                  stroke="#8884d8"
-                  fill="#8884d8"
-               />
-            </AreaChart>
-         </ResponsiveContainer>
-         <h4>Deaths</h4>
-         <ResponsiveContainer width="100%" height={200}>
-            <AreaChart
-               width={500}
-               height={400}
-               data={worldwideToggle ? deathsTimeline : countryDeathsTimeline}
-               margin={{
-                  top: 10,
-                  right: 0,
-                  left: 35,
-                  bottom: 0,
-               }}
-            >
-               <CartesianGrid strokeDasharray="3 3" />
-               <XAxis dataKey="date" interval={76} />
-               <YAxis />
-               <Tooltip />
-               <Area
-                  type="monotone"
-                  dataKey="number"
-                  stroke="#8884d8"
-                  fill="#8884d8"
-               />
-            </AreaChart>
-         </ResponsiveContainer>
+         <div style={{ display: "flex", flexDirection: "row" }}>
+            <Line_Chart_Template
+               worldwideToggle={worldwideToggle}
+               worldwideTimeline={casesTimeline}
+               countryTimeline={countryCasesTimeline}
+               title={"Cases"}
+               color={"#8884d8"}
+            />
+            <Line_Chart_Template
+               worldwideToggle={worldwideToggle}
+               worldwideTimeline={deathsTimeline}
+               countryTimeline={countryDeathsTimeline}
+               title={"Deaths"}
+               color={"#FF7F7F"}
+            />
+         </div>
       </div>
    );
 };

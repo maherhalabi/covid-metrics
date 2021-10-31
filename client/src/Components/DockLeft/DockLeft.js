@@ -6,7 +6,7 @@ import { countries } from "../Utils/Arrays & Objects/Countries";
 const DockLeft = ({ setChoice, setWorldwideToggle, setTitle }) => {
    const [foundCountries, setFoundCountries] = useState(countries);
    return (
-      <div>
+      <div style={{ maxHeight: "70vh" }}>
          <FilterCountry
             foundCountries={foundCountries}
             setFoundCountries={setFoundCountries}
