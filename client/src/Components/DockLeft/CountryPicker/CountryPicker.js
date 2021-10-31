@@ -2,7 +2,12 @@ import React from "react";
 import { ListGroup } from "react-bootstrap";
 import { countries } from "../../Utils/Arrays & Objects/Countries";
 
-const CountryPicker = ({ setChoice, setWorldwideToggle, setTitle }) => {
+const CountryPicker = ({
+   setChoice,
+   setWorldwideToggle,
+   setTitle,
+   foundCountries,
+}) => {
    const handleClick = (e) => {
       setChoice(e.target.innerText);
       setTitle(e.target.innerText);
@@ -26,7 +31,7 @@ const CountryPicker = ({ setChoice, setWorldwideToggle, setTitle }) => {
          <ListGroup.Item name="Worldwide" onClick={(e) => handleClick(e)}>
             Worldwide
          </ListGroup.Item>
-         {countries.map((item) => {
+         {foundCountries.map((item) => {
             return (
                <ListGroup.Item
                   name={item.country}
