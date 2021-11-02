@@ -1,31 +1,30 @@
 import React, { useRef, useState, useEffect } from "react";
 import { Form } from "react-bootstrap";
+import { fetchAllCurrentCountryData } from "../../../api";
 
-const FilterCountry = ({ setFoundCountries, foundCountries, countries }) => {
+const FilterCountry = ({
+   setAllCountryData,
+   allCountryData,
+   setFoundCountries,
+   foundCountries,
+   countries,
+}) => {
    const searchRef = useRef();
    const [value, setValue] = useState("");
-   const handleSearch = (e) => {
-      e.preventDefault();
-   };
 
    const filter = (e) => {
       const keyword = e.target.value;
 
       if (keyword !== "") {
-         const results = countries.filter((item) => {
+         const results = allCountryData.filter((item) => {
             return item.country.toLowerCase().startsWith(keyword.toLowerCase());
          });
          setFoundCountries(results);
       } else {
-         setFoundCountries(countries);
+         setFoundCountries(allCountryData);
       }
-
       setValue(keyword);
    };
-
-   useEffect(() => {
-      console.log(foundCountries);
-   }, [foundCountries]);
 
    return (
       <div>

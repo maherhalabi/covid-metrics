@@ -47,6 +47,8 @@ const Cards = ({
       },
    ];
 
+   console.log()
+
    return (
       <div>
          <div style={{ width: "100%" }}>

@@ -21,6 +21,7 @@ const App = () => {
                <Col md={3} className="col-centered">
                   <DockLeft
                      setChoice={setChoice}
+                     choice={choice}
                      setTitle={setTitle}
                      setWorldwideToggle={setWorldwideToggle}
                   />

@@ -1,15 +1,24 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import CountryPicker from "./CountryPicker/CountryPicker";
 import FilterCountry from "./FIlterCountry/FilterCountry";
 import { countries } from "../Utils/Arrays & Objects/Countries";
+import { fetchAllCurrentCountryData } from "../../api";
 
-const DockLeft = ({ setChoice, setWorldwideToggle, setTitle }) => {
-   const [foundCountries, setFoundCountries] = useState(countries);
+const DockLeft = ({ choice, setChoice, setWorldwideToggle, setTitle }) => {
+   const [allCountryData, setAllCountryData] = useState([]);
+   const [foundCountries, setFoundCountries] = useState([]);
+
+   useEffect(() => {
+      fetchAllCurrentCountryData(setAllCountryData, setFoundCountries);
+   }, []);
+
    return (
       <div style={{ maxHeight: "70vh" }}>
          <FilterCountry
             foundCountries={foundCountries}
             setFoundCountries={setFoundCountries}
+            allCountryData={allCountryData}
+            setAllCountryData={setAllCountryData}
             countries={countries}
          />
          <CountryPicker
@@ -18,6 +27,7 @@ const DockLeft = ({ setChoice, setWorldwideToggle, setTitle }) => {
             setTitle={setTitle}
             setWorldwideToggle={setWorldwideToggle}
             foundCountries={foundCountries}
+            choice={choice}
          />
       </div>
    );
