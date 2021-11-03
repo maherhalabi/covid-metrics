@@ -9,9 +9,9 @@ const CountryPicker = ({
    foundCountries,
 }) => {
    const handleClick = (e) => {
-      setChoice(e.target.innerText);
-      setTitle(e.target.innerText);
-      let isWorldwide = e.target.innerText == "Worldwide";
+      setChoice(e.target.getAttribute("name"));
+      setTitle(e.target.getAttribute("name"));
+      let isWorldwide = e.target.getAttribute("name") == "Worldwide";
       if (isWorldwide) {
          setWorldwideToggle(true);
       } else {
@@ -43,9 +43,10 @@ const CountryPicker = ({
                            flexDirection: "row",
                            justifyContent: "space-between",
                         }}
+                        name={item.country}
                      >
-                        <div>{item.country}</div>
-                        <div>{item.cases}</div>
+                        <div name={item.country}>{item.country}</div>
+                        <div name={item.country}>{item.cases}</div>
                      </div>
                   </ListGroup.Item>
                </div>
