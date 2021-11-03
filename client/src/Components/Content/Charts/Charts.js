@@ -19,23 +19,17 @@ import {
    fetchCurrentWorldWideData,
    fetchVaccineWorldwideTotal,
 } from "../../../api";
-import Donut_Chart_Template from "../../Utils/Donut_Chart_Template";
 
-const Chart = ({ worldwideData, countryData, choice, worldwideToggle }) => {
-   const [worldwideHistory, setWorldwideHistory] = useState({
-      cases: {},
-      deaths: {},
-      recovered: {},
-   });
-
-   const [countryHistory, setCountryHistory] = useState({
-      timeline: {
-         cases: {},
-         deaths: {},
-         recovered: {},
-      },
-   });
-
+const Chart = ({
+   worldwideData,
+   countryData,
+   choice,
+   worldwideToggle,
+   worldwideHistory,
+   setWorldwideHistory,
+   countryHistory,
+   setCountryHistory,
+}) => {
    const [vaccineWorldwide, setVaccineWorldwide] = useState({});
 
    useEffect(() => {

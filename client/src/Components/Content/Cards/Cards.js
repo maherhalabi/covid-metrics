@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
 import Card_Template from "../../Utils/Card_Template";
-import { Col, ListGroup, Row } from "react-bootstrap";
+import Card_Difference_Template from "../../Utils/Card_Difference_Template";
+import { Col, ListGroup, Row, Table } from "react-bootstrap";
 import {
    fetchCurrentWorldWideData,
    fetchCurrentCountryData,
+   fetchCountryHistoryData,
 } from "../../../api";
 import { countries } from "../../Utils/Arrays & Objects/Countries";
 import CountryPicker from "../../DockLeft/CountryPicker/CountryPicker";
+import { findSumOf1ActiveDay } from "../../Utils/Math/OneDayDifferece";
 
 const Cards = ({
    choice,
@@ -15,6 +18,8 @@ const Cards = ({
    setWorldwideData,
    countryData,
    setCountryData,
+   worldwideHistory,
+   countryHistory,
 }) => {
    useEffect(() => {
       if (!worldwideToggle) {
@@ -26,11 +31,6 @@ const Cards = ({
 
    const dataList = [
       {
-         title: "Active Cases",
-         worldwideNumber: worldwideData.active,
-         countryNumber: countryData.active,
-      },
-      {
          title: "Total Cases",
          worldwideNumber: worldwideData.cases,
          countryNumber: countryData.cases,
@@ -41,37 +41,62 @@ const Cards = ({
          countryNumber: countryData.recovered,
       },
       {
+         title: "Active Cases",
+         worldwideNumber: worldwideData.active,
+         countryNumber: countryData.active,
+         sumOf1ActiveDay: findSumOf1ActiveDay(
+            worldwideToggle,
+            worldwideHistory,
+            countryHistory
+         ),
+      },
+      {
          title: "Deaths",
          worldwideNumber: worldwideData.deaths,
          countryNumber: countryData.deaths,
       },
    ];
 
-   console.log()
+   // console.log(findSumOfTodayAndYesterday());
 
    return (
-      <div>
-         <div style={{ width: "100%" }}>
-            <Row style={{ display: "flex", justifyContent: "space-between" }}>
-               {dataList.map((dataItem) => {
-                  return worldwideToggle ? (
-                     <Col md={3}>
-                        <Card_Template
-                           title={dataItem.title}
-                           number={dataItem.worldwideNumber}
-                        />
-                     </Col>
-                  ) : (
-                     <Col md={3}>
-                        <Card_Template
-                           title={dataItem.title}
-                           number={dataItem.countryNumber}
-                        />
-                     </Col>
-                  );
-               })}
-            </Row>
-         </div>
+      <div style={{ width: "100%" }}>
+         <Table striped bordered hover>
+            <thead>
+               <tr>
+                  <th></th>
+                  {dataList.map((dataItem) => {
+                     return <th>{dataItem.title}</th>;
+                  })}
+               </tr>
+            </thead>
+            <tbody>
+               {worldwideToggle ? (
+                  <tr>
+                     <td></td>
+                     <td>{dataList[0].worldwideNumber}</td>
+                     <td>{dataList[1].worldwideNumber}</td>
+                     <td>{dataList[2].worldwideNumber}</td>
+                     <td>{dataList[3].worldwideNumber}</td>
+                  </tr>
+               ) : (
+                  <tr>
+                     <td></td>
+                     <td>{dataList[0].countryNumber}</td>
+                     <td>{dataList[1].countryNumber}</td>
+                     <td>{dataList[2].countryNumber}</td>
+                     <td>{dataList[3].countryNumber}</td>
+                  </tr>
+               )}
+               <tr>
+                  <td>1 Day</td>
+                  <td>{dataList[0].worldwideNumber}</td>
+                  <td>{dataList[1].worldwideNumber}</td>
+                  <td>{dataList[2].sumOf1ActiveDay}</td>
+                  <td>{dataList[3].worldwideNumber}</td>
+               </tr>
+            </tbody>
+         </Table>
       </div>
    );
 };
