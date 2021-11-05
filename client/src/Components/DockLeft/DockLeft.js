@@ -4,7 +4,13 @@ import FilterCountry from "./FIlterCountry/FilterCountry";
 import { countries } from "../Utils/Arrays & Objects/Countries";
 import { fetchAllCurrentCountryData } from "../../api";
 
-const DockLeft = ({ choice, setChoice, setWorldwideToggle, setTitle }) => {
+const DockLeft = ({
+   choice,
+   setChoice,
+   setWorldwideToggle,
+   setTitle,
+   worldwideData,
+}) => {
    const [allCountryData, setAllCountryData] = useState([]);
    const [foundCountries, setFoundCountries] = useState([]);
 
@@ -28,6 +34,7 @@ const DockLeft = ({ choice, setChoice, setWorldwideToggle, setTitle }) => {
             setWorldwideToggle={setWorldwideToggle}
             foundCountries={foundCountries}
             choice={choice}
+            worldwideData={worldwideData}
          />
       </div>
    );

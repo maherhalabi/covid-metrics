@@ -7,6 +7,7 @@ const CountryPicker = ({
    setWorldwideToggle,
    setTitle,
    foundCountries,
+   worldwideData,
 }) => {
    const handleClick = (e) => {
       setChoice(e.target.getAttribute("name"));
@@ -27,8 +28,17 @@ const CountryPicker = ({
             overflow: "scroll",
          }}
       >
-         <ListGroup.Item name="Worldwide" onClick={(e) => handleClick(e)}>
-            Worldwide
+         <ListGroup.Item
+            name="Worldwide"
+            style={{
+               display: "flex",
+               flexDirection: "row",
+               justifyContent: "space-between",
+            }}
+            onClick={(e) => handleClick(e)}
+         >
+            <div>Worldwide</div>
+            <div>{worldwideData.cases}</div>
          </ListGroup.Item>
          {foundCountries.map((item) => {
             return (
