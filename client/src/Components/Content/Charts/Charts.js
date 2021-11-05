@@ -12,28 +12,33 @@ import {
    Line,
 } from "recharts";
 import Line_Chart_Template from "../../Utils/Line_Chart_Template";
-import { fetchHistoryData, fetchCountryHistoryData } from "../../../api";
+import {
+   fetchHistoryData,
+   fetchCountryHistoryData,
+   fetchVaccineTotalByCountry,
+   fetchCurrentWorldWideData,
+   fetchVaccineWorldwideTotal,
+} from "../../../api";
 
-const Chart = ({ worldwideData, countryData, choice, worldwideToggle }) => {
-   const [worldwideHistory, setWorldwideHistory] = useState({
-      cases: {},
-      deaths: {},
-      recovered: {},
-   });
-
-   const [countryHistory, setCountryHistory] = useState({
-      timeline: {
-         cases: {},
-         deaths: {},
-         recovered: {},
-      },
-   });
+const Chart = ({
+   worldwideData,
+   countryData,
+   choice,
+   worldwideToggle,
+   worldwideHistory,
+   setWorldwideHistory,
+   countryHistory,
+   setCountryHistory,
+}) => {
+   const [vaccineWorldwide, setVaccineWorldwide] = useState({});
 
    useEffect(() => {
       if (!worldwideToggle) {
          fetchCountryHistoryData(setCountryHistory, choice);
+         fetchVaccineTotalByCountry(setCountryHistory, choice);
       } else {
          fetchHistoryData(setWorldwideHistory);
+         fetchVaccineWorldwideTotal(setVaccineWorldwide);
       }
    }, [choice]);
 
@@ -61,6 +66,11 @@ const Chart = ({ worldwideData, countryData, choice, worldwideToggle }) => {
       return { date: key, number: value };
    });
 
+   const worldwideTotalVaccinated =
+      Object.values(vaccineWorldwide)[
+         Object.values(vaccineWorldwide).length - 1
+      ];
+
    return (
       <div>
          <div style={{ display: "flex", flexDirection: "row" }}>
@@ -79,6 +89,12 @@ const Chart = ({ worldwideData, countryData, choice, worldwideToggle }) => {
                color={"#FF7F7F"}
             />
          </div>
+         {/* <div>
+            <Donut_Chart_Template
+               data={countryCasesTimeline}
+               title="Vaccinated"
+            />
+         </div> */}
       </div>
    );
 };
