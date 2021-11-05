@@ -1,4 +1,5 @@
 import React from "react";
+import moment from "moment";
 
 const findValueToCompare = (objValue, int) => {
    return Object.values(objValue)[Object.values(objValue).length - int];
@@ -122,4 +123,33 @@ export const findSumOf14RecoveredDays = (
 
       return lastInt - beforeLastInt;
    }
+};
+
+export const findFirstCase = (
+   worldwideToggle,
+   worldwideHistory,
+   countryHistory
+) => {
+   const getFirstDate = () => {
+      const getKeyByValue = (object, value) => {
+         for (var prop in object) {
+            if (object.hasOwnProperty(prop)) {
+               if (object[prop] > 1) return prop;
+            }
+         }
+      };
+
+      if (worldwideToggle) {
+         return moment(getKeyByValue(worldwideHistory.cases, 1)).format("L");
+      } else {
+         return moment(getKeyByValue(countryHistory.timeline.cases, 1)).format(
+            "L"
+         );
+      }
+   };
+
+   var a = moment(getFirstDate());
+   var b = moment(moment().format("MM/DD/YYYY"));
+
+   return b.diff(a, "days");
 };

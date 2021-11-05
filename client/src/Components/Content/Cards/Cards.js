@@ -1,7 +1,14 @@
 import React, { useEffect, useState } from "react";
 import Card_Template from "../../Utils/Card_Template";
 import Card_Difference_Template from "../../Utils/Card_Difference_Template";
-import { Col, ListGroup, Row, Table } from "react-bootstrap";
+import {
+   Col,
+   ListGroup,
+   Row,
+   Table,
+   Card,
+   ListGroupItem,
+} from "react-bootstrap";
 import {
    fetchCurrentWorldWideData,
    fetchCurrentCountryData,
@@ -16,7 +23,9 @@ import {
    findSumOf1DeathDay,
    findSumOf14RecoveredDays,
    findSumOf1RecoveredDay,
+   findFirstCase,
 } from "../../Utils/Math/SumDifference";
+import moment from "moment";
 
 const Cards = ({
    choice,
@@ -38,11 +47,21 @@ const Cards = ({
 
    const dataList = [
       {
-         title: "Total Cases",
-         worldwideNumber: worldwideData.cases,
-         worldWidePerMillion: worldwideData.casesPerOneMillion,
-         countryNumber: countryData.cases,
-         countryPerMillion: countryData.casesPerOneMillion,
+         title: "Active Cases",
+         worldwideNumber: worldwideData.active,
+         worldWidePerMillion: worldwideData.activePerOneMillion,
+         countryNumber: countryData.active,
+         countryPerMillion: countryData.activePerOneMillion,
+         sumOf1ActiveDay: findSumOf1ActiveDay(
+            worldwideToggle,
+            worldwideHistory,
+            countryHistory
+         ),
+         sumof14ActiveDays: findSumOf14ActiveDays(
+            worldwideToggle,
+            worldwideHistory,
+            countryHistory
+         ),
       },
       {
          title: "Recovered",
@@ -56,23 +75,6 @@ const Cards = ({
             countryHistory
          ),
          sumof14ActiveDays: findSumOf14RecoveredDays(
-            worldwideToggle,
-            worldwideHistory,
-            countryHistory
-         ),
-      },
-      {
-         title: "Active Cases",
-         worldwideNumber: worldwideData.active,
-         worldWidePerMillion: worldwideData.activePerOneMillion,
-         countryNumber: countryData.active,
-         countryPerMillion: countryData.activePerOneMillion,
-         sumOf1ActiveDay: findSumOf1ActiveDay(
-            worldwideToggle,
-            worldwideHistory,
-            countryHistory
-         ),
-         sumof14ActiveDays: findSumOf14ActiveDays(
             worldwideToggle,
             worldwideHistory,
             countryHistory
@@ -97,11 +99,44 @@ const Cards = ({
       },
    ];
 
-   console.log(worldwideHistory);
-
    return (
       <div style={{ width: "100%" }}>
-         <Table striped bordered hover>
+         <div style={{ display: "flex", justifyContent: "space-between" }}>
+            {dataList.map((dataItem) => {
+               const {
+                  title,
+                  worldwideNumber,
+                  worldWidePerMillion,
+                  countryNumber,
+                  sumO1ActiveDay,
+                  sumO14ActiveDays,
+               } = dataItem;
+               return (
+                  <div>
+                     <Card.Body>
+                        <Card.Title>
+                           {worldwideToggle ? worldwideNumber : countryNumber}
+                        </Card.Title>
+                        <Card.Text>{title}</Card.Text>
+                     </Card.Body>
+                  </div>
+               );
+            })}
+            <div>
+               <Card.Body>
+                  <Card.Title>
+                     {findFirstCase(
+                        worldwideToggle,
+                        worldwideHistory,
+                        countryHistory
+                     )}
+                  </Card.Title>
+                  <Card.Text>First Case</Card.Text>
+               </Card.Body>
+            </div>
+         </div>
+
+         {/* <Table striped bordered hover>
             <thead>
                <tr>
                   <th></th>
@@ -130,15 +165,23 @@ const Cards = ({
                )}
                <tr>
                   <td>1 Day</td>
-                  <td>{dataList[0].sumOf1ActiveDay}</td>
-                  <td>{dataList[1].sumOf1ActiveDay}</td>
+                  <td>{dataList[2].sumOf1ActiveDay}</td>
+                  <td>
+                     {dataList[1].sumOf1ActiveDay === 0
+                        ? "Unavailable"
+                        : dataList[1].sumOf1ActiveDay}
+                  </td>
                   <td>{dataList[2].sumOf1ActiveDay}</td>
                   <td>{dataList[3].sumOf1ActiveDay}</td>
                </tr>
                <tr>
                   <td>14 Days</td>
-                  <td>{dataList[0].sumof14ActiveDays}</td>
-                  <td>{dataList[1].sumof14ActiveDays}</td>
+                  <td>{dataList[2].sumof14ActiveDays}</td>
+                  <td>
+                     {dataList[1].sumof14ActiveDays === 0
+                        ? "Unavailable"
+                        : dataList[1].sumof14ActiveDays}
+                  </td>
                   <td>{dataList[2].sumof14ActiveDays}</td>
                   <td>{dataList[3].sumof14ActiveDays}</td>
                </tr>
@@ -160,7 +203,7 @@ const Cards = ({
                   </tr>
                )}
             </tbody>
-         </Table>
+         </Table> */}
       </div>
    );
 };
