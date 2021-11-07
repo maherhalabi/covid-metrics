@@ -68,7 +68,7 @@ export const fetchAllCurrentCountryData = async (useState, originalState) => {
             };
             newArray.push(newObject);
          });
-         
+
          originalState(newArray);
          useState(newArray);
       });
@@ -90,8 +90,6 @@ export const fetchVaccineWorldwideTotal = async (useState) => {
    }
 };
 
-console.log("VACCINE TOTAL", fetchVaccineWorldwideTotal());
-
 export const fetchVaccineTotalByCountry = async (useState, country) => {
    try {
       const response = await axios
@@ -105,4 +103,30 @@ export const fetchVaccineTotalByCountry = async (useState, country) => {
    }
 };
 
-console.log("VACCINE BY COUNTRY", fetchVaccineTotalByCountry());
+export const fetchVaccineCountryHistory = async (useState, country) => {
+   https: try {
+      const response = await axios
+         .get(`${url}/vaccine/coverage/countries?lastdays=all`)
+         .then((item) => {
+            const data = item.data;
+            const results = data.filter((item) => item.country === country);
+            useState(results[0].timeline);
+         });
+   } catch (e) {
+      console.log(e);
+   }
+};
+
+export const fetchVaccineWorldwideHistory = async (useState) => {
+   https: try {
+      const response = await axios
+         .get(`${url}/vaccine/coverage?lastdays=all`)
+         .then((item) => {
+            const data = item.data;
+            console.log("APUI", data);
+            useState(data);
+         });
+   } catch (e) {
+      console.log(e);
+   }
+};

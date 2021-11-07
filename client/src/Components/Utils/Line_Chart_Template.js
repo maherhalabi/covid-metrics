@@ -8,6 +8,9 @@ import {
    Tooltip,
    XAxis,
    YAxis,
+   LineChart,
+   Legend,
+   Line,
 } from "recharts";
 
 const Line_Chart_Template = (props) => {
@@ -16,43 +19,59 @@ const Line_Chart_Template = (props) => {
          style={{
             display: "flex",
             flexDirection: "column",
-            width: "50%",
+            width: "100%",
          }}
       >
          <h4>{props.title}</h4>
-         <ResponsiveContainer width="100%" height={400}>
-            <AreaChart
-               width={500}
-               height={400}
-               data={
-                  props.worldwideToggle
-                     ? props.worldwideTimeline
-                     : props.countryTimeline
-               }
-               margin={{
-                  top: 10,
-                  right: 0,
-                  left: 35,
-                  bottom: 0,
-               }}
-            >
-               <CartesianGrid strokeDasharray="3 3" />
-               <XAxis
-                  dataKey="date"
-                  dy={10}
-                  minTickGap={6}
-                  fontSizeAdjust={0.45}
-               />
-               <YAxis dx={-5} />
-               <Tooltip />
-               <Area
-                  type="monotone"
-                  dataKey="number"
-                  stroke="#8884d8"
-                  fill={props.color}
-               />
-            </AreaChart>
-         </ResponsiveContainer>
+
+         <div style={{ width: "100%" }}>
+            <ResponsiveContainer width="100%" aspect={4.0 / 3.0}>
+               <LineChart
+                  width={300}
+                  height={300}
+                  data={
+                     props.worldwideToggle
+                        ? props.worldwideTimeline
+                        : props.countryTimeline
+                  }
+                  margin={{
+                     top: 10,
+                     right: 0,
+                     left: 50,
+                     bottom: 0,
+                  }}
+               >
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis
+                     dataKey="date"
+                     dy={10}
+                     minTickGap={6}
+                     fontSizeAdjust={0.45}
+                  />
+                  <YAxis dx={-5} />
+                  <Tooltip />
+                  <Legend />
+                  <Line
+                     type="monotone"
+                     dataKey="Cases"
+                     stroke="#8884d8"
+                     activeDot={{ r: 8 }}
+                  />
+                  <Line
+                     type="monotone"
+                     dataKey="Deaths"
+                     stroke="#FF0000"
+                     activeDot={{ r: 8 }}
+                  />
+                  <Line
+                     type="monotone"
+                     dataKey="Doses"
+                     stroke="#006400"
+                     activeDot={{ r: 8 }}
+                  />
+               </LineChart>
+            </ResponsiveContainer>
+         </div>
       </div>
    );
 };

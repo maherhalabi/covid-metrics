@@ -64,19 +64,13 @@ export const createPercentageArray = (
 ) => {
    if (toggle) {
       for (let i = 0; i < daysArray.length - 1; i++) {
-         const lastDate = findKeyToCompare(
-            worldwideHistory.deaths,
-            daysArray[i + 1]
-         );
+         const lastDate = findKeyToCompare(worldwideHistory, daysArray[i + 1]);
 
          const beforeLastInt = findValueToCompare(
-            worldwideHistory.deaths,
+            worldwideHistory,
             daysArray[i + 1]
          );
-         const lastInt = findValueToCompare(
-            worldwideHistory.deaths,
-            daysArray[i]
-         );
+         const lastInt = findValueToCompare(worldwideHistory, daysArray[i]);
          const percentageChange = getPercentageChange(lastInt, beforeLastInt);
          let obj = {};
          obj["date"] = lastDate;
@@ -89,19 +83,13 @@ export const createPercentageArray = (
       return array;
    } else {
       for (let i = 0; i < daysArray.length - 1; i++) {
-         const lastDate = findKeyToCompare(
-            countryHistory.timeline.deaths,
-            daysArray[i + 1]
-         );
+         const lastDate = findKeyToCompare(countryHistory, daysArray[i + 1]);
 
          const beforeLastInt = findValueToCompare(
-            countryHistory.timeline.deaths,
+            countryHistory,
             daysArray[i + 1]
          );
-         const lastInt = findValueToCompare(
-            countryHistory.timeline.deaths,
-            daysArray[i]
-         );
+         const lastInt = findValueToCompare(countryHistory, daysArray[i]);
          const percentageChange = getPercentageChange(lastInt, beforeLastInt);
          let obj = {};
          obj["date"] = lastDate;

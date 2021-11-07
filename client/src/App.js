@@ -13,6 +13,14 @@ const App = () => {
    const [worldwideData, setWorldwideData] = useState(0);
    const [countryData, setCountryData] = useState(0);
 
+   const [width, setWidth] = useState(window.innerWidth);
+   const [height, setHeight] = useState(window.innerHeight);
+   
+   const updateDimensions = () => {
+      setWidth(window.innerWidth);
+      setHeight(window.innerHeight);
+   };
+
    return (
       <div className="bg-light">
          <Header title={title} />

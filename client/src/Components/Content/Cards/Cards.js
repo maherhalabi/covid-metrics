@@ -30,7 +30,6 @@ import {
    createPercentageArray,
    fourteenDayActivePercentage,
    fourteenDayDeathsPercentage,
-   percentageArray,
 } from "../../Utils/Math/PercentageDifference";
 import moment from "moment";
 
@@ -50,9 +49,13 @@ const Cards = ({
       } else {
          fetchCurrentWorldWideData(setWorldwideData);
       }
+
+      // window.addEventListener("resize", updateDimensions);
+      // return () => window.removeEventListener("resize", updateDimensions);
    }, [choice]);
 
-   const percentageArray = [];
+   const percentageOfDeathsArray = [];
+   const percentageOfActiveArray = [];
 
    const dataList = [
       {
@@ -70,6 +73,12 @@ const Cards = ({
             worldwideToggle,
             worldwideHistory,
             countryHistory
+         ),
+         createPercentageArray: createPercentageArray(
+            worldwideHistory.cases,
+            countryHistory.timeline.cases,
+            worldwideToggle,
+            percentageOfActiveArray
          ),
       },
       {
@@ -106,31 +115,37 @@ const Cards = ({
             countryHistory
          ),
          createPercentageArray: createPercentageArray(
-            worldwideHistory,
-            countryHistory,
+            worldwideHistory.deaths,
+            countryHistory.timeline.deaths,
             worldwideToggle,
-            percentageArray
+            percentageOfDeathsArray
          ),
       },
    ];
 
-   console.log(dataList[2].createPercentageArray);
-   const xLabels = percentageArray.map((item) => {
-      return item.date;
-   });
+   const xLabels = (array) => {
+      return array.map((item) => {
+         return item.date;
+      });
+   };
 
    const xLabelsVisibility = new Array(7)
       .fill(0)
       .map((_, i) => (i % 2 === 0 ? true : false));
 
-   const yLabels = ["Cases", "Deaths"];
+   const yLabels = (value) => {
+      return [value];
+   };
 
-   const data = new Array(yLabels.length).fill(0).map(() =>
-      percentageArray.map((item) => {
-         return item.percentage;
-      })
-   );
-   console.log(data);
+   const avgDeathsData = (array) => {
+      const data = new Array(yLabels.length).fill(0).map(() =>
+         array.map((item) => {
+            return item.percentage;
+         })
+      );
+
+      return data;
+   };
 
    return (
       <div style={{ width: "100%" }}>
@@ -187,7 +202,7 @@ const Cards = ({
                   worldwideHistory={worldwideHistory}
                   countryHistory={countryHistory}
                   worldwideToggle={worldwideToggle}
-                  percentageArray={percentageArray}
+                  percentageOfDeathsArray={percentageOfDeathsArray}
                   // percent={fourteenDayDeathsPercentage(
                   //    worldwideHistory,
                   //    countryHistory,
@@ -208,26 +223,55 @@ const Cards = ({
             <div style={{ textAlign: "center", fontSize: "20px" }}>
                7-Day Average
             </div>
-            <div style={{ width: "100%", height: "200px" }}>
+            <div style={{ width: "100%" }}>
                <HeatMap
-                  xLabels={xLabels}
-                  yLabels={yLabels}
+                  xLabels={xLabels(percentageOfDeathsArray)}
+                  yLabels={yLabels("Deaths")}
                   xLabelsLocation={"bottom"}
                   xLabelsVisibility={xLabelsVisibility}
                   xLabelWidth={100}
                   yLabelWidth={100}
-                  height={100}
-                  data={data}
+                  height={115}
+                  data={avgDeathsData(percentageOfDeathsArray)}
                   squares
                   onClick={(x, y) => alert(`Clicked ${x}, ${y}`)}
                   cellStyle={(background, value, min, max, data, x, y) => ({
                      background: `rgb(0, 151, 230, ${
                         1 - (max - value) / (max - min)
                      })`,
-                     fontSize: "13px",
+                     fontSize: "25px",
                      color: "#444",
                   })}
                   cellRender={(value) => value && `${value}%`}
+                  title={(value, unit) => `${value}`}
+               />
+            </div>
+            <div style={{ width: "100%", height: "100%" }}>
+               <HeatMap
+                  xLabels={xLabels(percentageOfActiveArray)}
+                  yLabels={yLabels("Active")}
+                  xLabelsLocation={"bottom"}
+                  xLabelsVisibility={xLabelsVisibility}
+                  xLabelWidth={100}
+                  yLabelWidth={100}
+                  height={115}
+                  data={avgDeathsData(percentageOfActiveArray)}
+                  squares
+                  onClick={(x, y) => alert(`Clicked ${x}, ${y}`)}
+                  cellStyle={(background, value, min, max, data, x, y) => ({
+                     background: `rgb(200, 39, 6, ${
+                        1 - (max - value) / (max - min)
+                     })`,
+                     fontSize: "25px",
+                     color: "#444",
+                  })}
+                  cellRender={(value) => {
+                     return (
+                        <div style={{ height: "100%" }}>
+                           {value && `${value}%`}
+                        </div>
+                     );
+                  }}
                   title={(value, unit) => `${value}`}
                />
             </div>
