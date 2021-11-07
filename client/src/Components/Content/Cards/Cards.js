@@ -9,6 +9,7 @@ import {
    Card,
    ListGroupItem,
 } from "react-bootstrap";
+import HeatMap from "react-heatmap-grid";
 import {
    fetchCurrentWorldWideData,
    fetchCurrentCountryData,
@@ -25,6 +26,12 @@ import {
    findSumOf1RecoveredDay,
    findFirstCase,
 } from "../../Utils/Math/SumDifference";
+import {
+   createPercentageArray,
+   fourteenDayActivePercentage,
+   fourteenDayDeathsPercentage,
+   percentageArray,
+} from "../../Utils/Math/PercentageDifference";
 import moment from "moment";
 
 const Cards = ({
@@ -44,6 +51,8 @@ const Cards = ({
          fetchCurrentWorldWideData(setWorldwideData);
       }
    }, [choice]);
+
+   const percentageArray = [];
 
    const dataList = [
       {
@@ -96,12 +105,42 @@ const Cards = ({
             worldwideHistory,
             countryHistory
          ),
+         createPercentageArray: createPercentageArray(
+            worldwideHistory,
+            countryHistory,
+            worldwideToggle,
+            percentageArray
+         ),
       },
    ];
 
+   console.log(dataList[2].createPercentageArray);
+   const xLabels = percentageArray.map((item) => {
+      return item.date;
+   });
+
+   const xLabelsVisibility = new Array(7)
+      .fill(0)
+      .map((_, i) => (i % 2 === 0 ? true : false));
+
+   const yLabels = ["Cases", "Deaths"];
+
+   const data = new Array(yLabels.length).fill(0).map(() =>
+      percentageArray.map((item) => {
+         return item.percentage;
+      })
+   );
+   console.log(data);
+
    return (
       <div style={{ width: "100%" }}>
-         <div style={{ display: "flex", justifyContent: "space-between" }}>
+         <div
+            style={{
+               display: "flex",
+               justifyContent: "space-between",
+               flexWrap: "wrap",
+            }}
+         >
             {dataList.map((dataItem) => {
                const {
                   title,
@@ -112,98 +151,87 @@ const Cards = ({
                   sumO14ActiveDays,
                } = dataItem;
                return (
-                  <div>
-                     <Card.Body>
-                        <Card.Title>
-                           {worldwideToggle ? worldwideNumber : countryNumber}
-                        </Card.Title>
-                        <Card.Text>{title}</Card.Text>
-                     </Card.Body>
+                  <div
+                     style={{
+                        flex: 1,
+                        paddingLeft: "10px",
+                        paddingRight: "10px",
+                     }}
+                  >
+                     <Card_Template
+                        number={
+                           worldwideToggle ? worldwideNumber : countryNumber
+                        }
+                        title={title}
+                     />
                   </div>
                );
             })}
-            <div>
-               <Card.Body>
-                  <Card.Title>
-                     {findFirstCase(
-                        worldwideToggle,
-                        worldwideHistory,
-                        countryHistory
-                     )}
-                  </Card.Title>
-                  <Card.Text>First Case</Card.Text>
-               </Card.Body>
+            <div style={{ flex: 1, paddingLeft: "10px", paddingRight: "10px" }}>
+               <Card_Template
+                  number={findFirstCase(
+                     worldwideToggle,
+                     worldwideHistory,
+                     countryHistory
+                  )}
+                  title="First Case"
+               />
             </div>
          </div>
-
-         {/* <Table striped bordered hover>
-            <thead>
-               <tr>
-                  <th></th>
-                  {dataList.map((dataItem) => {
-                     return <th>{dataItem.title}</th>;
+         <div style={{ display: "flex", width: "100%" }}>
+            <div style={{ paddingLeft: "10px", flex: 1 }}>
+               <Card_Difference_Template
+                  OneDayDifference={dataList[0].sumOf1ActiveDay}
+                  FourteenDayDifference={dataList[0].sumof14ActiveDays}
+                  title={dataList[0].title}
+                  worldwideHistory={worldwideHistory}
+                  countryHistory={countryHistory}
+                  worldwideToggle={worldwideToggle}
+                  percentageArray={percentageArray}
+                  // percent={fourteenDayDeathsPercentage(
+                  //    worldwideHistory,
+                  //    countryHistory,
+                  //    worldwideToggle
+                  // )}
+                  // id="activeId"
+               />
+            </div>
+            <div style={{ paddingLeft: "10px", flex: 1 }}>
+               <Card_Difference_Template
+                  OneDayDifference={dataList[2].sumOf1ActiveDay}
+                  FourteenDayDifference={dataList[2].sumof14ActiveDays}
+                  title={dataList[2].title}
+               />
+            </div>
+         </div>
+         <div style={{ display: "flex", flexDirection: "column" }}>
+            <div style={{ textAlign: "center", fontSize: "20px" }}>
+               7-Day Average
+            </div>
+            <div style={{ width: "100%", height: "200px" }}>
+               <HeatMap
+                  xLabels={xLabels}
+                  yLabels={yLabels}
+                  xLabelsLocation={"bottom"}
+                  xLabelsVisibility={xLabelsVisibility}
+                  xLabelWidth={100}
+                  yLabelWidth={100}
+                  height={100}
+                  data={data}
+                  squares
+                  onClick={(x, y) => alert(`Clicked ${x}, ${y}`)}
+                  cellStyle={(background, value, min, max, data, x, y) => ({
+                     background: `rgb(0, 151, 230, ${
+                        1 - (max - value) / (max - min)
+                     })`,
+                     fontSize: "13px",
+                     color: "#444",
                   })}
-               </tr>
-            </thead>
-            <tbody>
-               {worldwideToggle ? (
-                  <tr>
-                     <td></td>
-                     <td>{dataList[0].worldwideNumber}</td>
-                     <td>{dataList[1].worldwideNumber}</td>
-                     <td>{dataList[2].worldwideNumber}</td>
-                     <td>{dataList[3].worldwideNumber}</td>
-                  </tr>
-               ) : (
-                  <tr>
-                     <td></td>
-                     <td>{dataList[0].countryNumber}</td>
-                     <td>{dataList[1].countryNumber}</td>
-                     <td>{dataList[2].countryNumber}</td>
-                     <td>{dataList[3].countryNumber}</td>
-                  </tr>
-               )}
-               <tr>
-                  <td>1 Day</td>
-                  <td>{dataList[2].sumOf1ActiveDay}</td>
-                  <td>
-                     {dataList[1].sumOf1ActiveDay === 0
-                        ? "Unavailable"
-                        : dataList[1].sumOf1ActiveDay}
-                  </td>
-                  <td>{dataList[2].sumOf1ActiveDay}</td>
-                  <td>{dataList[3].sumOf1ActiveDay}</td>
-               </tr>
-               <tr>
-                  <td>14 Days</td>
-                  <td>{dataList[2].sumof14ActiveDays}</td>
-                  <td>
-                     {dataList[1].sumof14ActiveDays === 0
-                        ? "Unavailable"
-                        : dataList[1].sumof14ActiveDays}
-                  </td>
-                  <td>{dataList[2].sumof14ActiveDays}</td>
-                  <td>{dataList[3].sumof14ActiveDays}</td>
-               </tr>
-               {worldwideToggle ? (
-                  <tr>
-                     <td>Per 1 Million</td>
-                     <td>{dataList[0].worldWidePerMillion}</td>
-                     <td>{dataList[1].worldWidePerMillion}</td>
-                     <td>{dataList[2].worldWidePerMillion}</td>
-                     <td>{dataList[3].worldWidePerMillion}</td>
-                  </tr>
-               ) : (
-                  <tr>
-                     <td>Per 1 Million</td>
-                     <td>{dataList[0].countryPerMillion}</td>
-                     <td>{dataList[1].countryPerMillion}</td>
-                     <td>{dataList[2].countryPerMillion}</td>
-                     <td>{dataList[3].countryPerMillion}</td>
-                  </tr>
-               )}
-            </tbody>
-         </Table> */}
+                  cellRender={(value) => value && `${value}%`}
+                  title={(value, unit) => `${value}`}
+               />
+            </div>
+         </div>
       </div>
    );
 };

@@ -18,6 +18,8 @@
     "react-chartjs-2": "^2.10.0",
     "react-countup": "^4.3.3",
     "react-dom": "^16.13.1",
+    "react-gauge-chart": "^0.4.0",
+    "react-heatmap-grid": "^0.8.2",
     "react-moment": "^0.9.7",
     "react-scripts": "3.4.3",
     "react-strap": "^0.0.1",
