@@ -11,8 +11,17 @@ const LastUpdated = () => {
    }, []);
 
    return (
-      <div style={{ textAlign: "right" }}>
-         <mark>Last Updated: {moment(data.updated).format("LLLL")}</mark>
+      <div
+         style={{
+            textAlign: "center",
+            fontSize: "25px",
+            color: "black",
+            backgroundColor: "#FFFF99",
+            borderRadius: "3px",
+            padding: "5px",
+         }}
+      >
+         <div>Last Updated: {moment(data.updated).format("LLLL")}</div>
       </div>
    );
 };

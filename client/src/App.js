@@ -15,14 +15,14 @@ const App = () => {
 
    const [width, setWidth] = useState(window.innerWidth);
    const [height, setHeight] = useState(window.innerHeight);
-   
+
    const updateDimensions = () => {
       setWidth(window.innerWidth);
       setHeight(window.innerHeight);
    };
 
    return (
-      <div className="bg-light">
+      <div style={{ backgroundColor: "black" }}>
          <Header title={title} />
          <Container>
             <Row>

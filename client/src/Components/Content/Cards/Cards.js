@@ -9,6 +9,8 @@ import {
    Card,
    ListGroupItem,
 } from "react-bootstrap";
+import { BrushBarChart } from "../../Utils/BrushBarChart";
+import { ResponsiveContainer } from "recharts";
 import HeatMap from "react-heatmap-grid";
 import {
    fetchCurrentWorldWideData,
@@ -78,7 +80,8 @@ const Cards = ({
             worldwideHistory.cases,
             countryHistory.timeline.cases,
             worldwideToggle,
-            percentageOfActiveArray
+            percentageOfActiveArray,
+            "Cases"
          ),
       },
       {
@@ -118,37 +121,43 @@ const Cards = ({
             worldwideHistory.deaths,
             countryHistory.timeline.deaths,
             worldwideToggle,
-            percentageOfDeathsArray
+            percentageOfDeathsArray,
+            "Deaths"
          ),
       },
    ];
 
-   const xLabels = (array) => {
-      return array.map((item) => {
-         return item.date;
-      });
-   };
+   const combineCasesAndDeathsArray = [
+      ...percentageOfActiveArray,
+      ...percentageOfDeathsArray,
+   ];
 
-   const xLabelsVisibility = new Array(7)
-      .fill(0)
-      .map((_, i) => (i % 2 === 0 ? true : false));
-
-   const yLabels = (value) => {
-      return [value];
-   };
-
-   const avgDeathsData = (array) => {
-      const data = new Array(yLabels.length).fill(0).map(() =>
-         array.map((item) => {
-            return item.percentage;
-         })
-      );
-
-      return data;
-   };
+   const groupByDate = (array) =>
+      array.reduce((results, item) => {
+         const current = results.find((i) => i.date === item.date);
+         if (current) {
+            for (let property in item) {
+               if (property !== "date") {
+                  current[property] = item[property];
+               }
+            }
+         } else {
+            results.push({ ...item });
+         }
+         return results;
+      }, []);
 
    return (
-      <div style={{ width: "100%" }}>
+      <div
+         style={{
+            width: "100%",
+            padding: "30px",
+            backgroundColor: "grey",
+            border: "2px solid white",
+            borderRadius: "3px",
+         }}
+      >
+         <h3>Cases Overview</h3>
          <div
             style={{
                display: "flex",
@@ -169,8 +178,6 @@ const Cards = ({
                   <div
                      style={{
                         flex: 1,
-                        paddingLeft: "10px",
-                        paddingRight: "10px",
                      }}
                   >
                      <Card_Template
@@ -182,18 +189,18 @@ const Cards = ({
                   </div>
                );
             })}
-            <div style={{ flex: 1, paddingLeft: "10px", paddingRight: "10px" }}>
+            <div style={{ flex: 1 }}>
                <Card_Template
-                  number={findFirstCase(
+                  number={`${findFirstCase(
                      worldwideToggle,
                      worldwideHistory,
                      countryHistory
-                  )}
+                  )} Days Ago`}
                   title="First Case"
                />
             </div>
          </div>
-         <div style={{ display: "flex", width: "100%" }}>
+         <div style={{ display: "flex", width: "100%", padding: "30px" }}>
             <div style={{ paddingLeft: "10px", flex: 1 }}>
                <Card_Difference_Template
                   OneDayDifference={dataList[0].sumOf1ActiveDay}
@@ -203,12 +210,6 @@ const Cards = ({
                   countryHistory={countryHistory}
                   worldwideToggle={worldwideToggle}
                   percentageOfDeathsArray={percentageOfDeathsArray}
-                  // percent={fourteenDayDeathsPercentage(
-                  //    worldwideHistory,
-                  //    countryHistory,
-                  //    worldwideToggle
-                  // )}
-                  // id="activeId"
                />
             </div>
             <div style={{ paddingLeft: "10px", flex: 1 }}>
@@ -216,63 +217,6 @@ const Cards = ({
                   OneDayDifference={dataList[2].sumOf1ActiveDay}
                   FourteenDayDifference={dataList[2].sumof14ActiveDays}
                   title={dataList[2].title}
-               />
-            </div>
-         </div>
-         <div style={{ display: "flex", flexDirection: "column" }}>
-            <div style={{ textAlign: "center", fontSize: "20px" }}>
-               7-Day Average
-            </div>
-            <div style={{ width: "100%" }}>
-               <HeatMap
-                  xLabels={xLabels(percentageOfDeathsArray)}
-                  yLabels={yLabels("Deaths")}
-                  xLabelsLocation={"bottom"}
-                  xLabelsVisibility={xLabelsVisibility}
-                  xLabelWidth={100}
-                  yLabelWidth={100}
-                  height={115}
-                  data={avgDeathsData(percentageOfDeathsArray)}
-                  squares
-                  onClick={(x, y) => alert(`Clicked ${x}, ${y}`)}
-                  cellStyle={(background, value, min, max, data, x, y) => ({
-                     background: `rgb(0, 151, 230, ${
-                        1 - (max - value) / (max - min)
-                     })`,
-                     fontSize: "25px",
-                     color: "#444",
-                  })}
-                  cellRender={(value) => value && `${value}%`}
-                  title={(value, unit) => `${value}`}
-               />
-            </div>
-            <div style={{ width: "100%", height: "100%" }}>
-               <HeatMap
-                  xLabels={xLabels(percentageOfActiveArray)}
-                  yLabels={yLabels("Active")}
-                  xLabelsLocation={"bottom"}
-                  xLabelsVisibility={xLabelsVisibility}
-                  xLabelWidth={100}
-                  yLabelWidth={100}
-                  height={115}
-                  data={avgDeathsData(percentageOfActiveArray)}
-                  squares
-                  onClick={(x, y) => alert(`Clicked ${x}, ${y}`)}
-                  cellStyle={(background, value, min, max, data, x, y) => ({
-                     background: `rgb(200, 39, 6, ${
-                        1 - (max - value) / (max - min)
-                     })`,
-                     fontSize: "25px",
-                     color: "#444",
-                  })}
-                  cellRender={(value) => {
-                     return (
-                        <div style={{ height: "100%" }}>
-                           {value && `${value}%`}
-                        </div>
-                     );
-                  }}
-                  title={(value, unit) => `${value}`}
                />
             </div>
          </div>

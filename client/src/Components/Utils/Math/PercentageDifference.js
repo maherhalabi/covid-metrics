@@ -60,7 +60,8 @@ export const createPercentageArray = (
    worldwideHistory,
    countryHistory,
    toggle,
-   array
+   array,
+   string
 ) => {
    if (toggle) {
       for (let i = 0; i < daysArray.length - 1; i++) {
@@ -74,11 +75,9 @@ export const createPercentageArray = (
          const percentageChange = getPercentageChange(lastInt, beforeLastInt);
          let obj = {};
          obj["date"] = lastDate;
-         obj["percentage"] = percentageChange.toFixed(3);
+         obj[`${string}`] = percentageChange.toFixed(3);
 
          array.push(obj);
-
-         // Display only even labels
       }
       return array;
    } else {
@@ -93,11 +92,119 @@ export const createPercentageArray = (
          const percentageChange = getPercentageChange(lastInt, beforeLastInt);
          let obj = {};
          obj["date"] = lastDate;
-         obj["percentage"] = percentageChange.toFixed(3);
+         obj[`${string}`] = percentageChange.toFixed(3);
 
          array.push(obj);
       }
 
       return array;
    }
+};
+
+export const worldwideDailyCases = (
+   worldwideHistory,
+   countryHistory,
+   sevenDayAvgArray,
+   toggle
+) => {
+   if (toggle) {
+      const lastInt = Object.values(worldwideHistory).length - 1;
+
+      const dateArray = [];
+      const dailyArray = [];
+      const avg7Array = [];
+
+      const combinedArray = [];
+
+      for (let i = 1; i < lastInt; i++) {
+         const date = Object.keys(worldwideHistory)[i];
+         let firstValue = Object.values(worldwideHistory)[i];
+
+         let secondValue = Object.values(worldwideHistory)[i + 1];
+         let dailyCase = secondValue - firstValue;
+         let obj = {};
+
+         dailyArray.push(dailyCase);
+         dateArray.push(date);
+      }
+
+      let numOfDays = 7;
+
+      const lastIntSevenDay = dailyArray.length - 1;
+
+      for (let i = 0; i < lastIntSevenDay + 1; i++) {
+         let total = 0;
+
+         for (let j = i - numOfDays; j < i; j++) {
+            total += dailyArray[j];
+         }
+         let grandTotal = total / numOfDays;
+
+         avg7Array.push(grandTotal.toFixed(0));
+      }
+
+      for (let i = 0; i < lastInt - 1; i++) {
+         let obj = {};
+         obj["date"] = dateArray[i];
+         obj["cases"] = dailyArray[i];
+         obj["sevenDayAvg"] = avg7Array[i];
+
+         combinedArray.push(obj);
+      }
+
+      return combinedArray;
+   } else {
+      const lastInt = Object.values(countryHistory).length - 1;
+
+      const dateArray = [];
+      const dailyArray = [];
+      const avg7Array = [];
+
+      const combinedArray = [];
+
+      for (let i = 1; i < lastInt; i++) {
+         const date = Object.keys(countryHistory)[i];
+         let firstValue = Object.values(countryHistory)[i];
+
+         let secondValue = Object.values(countryHistory)[i + 1];
+         let dailyCase = secondValue - firstValue;
+         let obj = {};
+
+         dailyArray.push(dailyCase);
+         dateArray.push(date);
+      }
+
+      let numOfDays = 7;
+
+      const lastIntSevenDay = dailyArray.length - 1;
+
+      for (let i = 0; i < lastIntSevenDay + 1; i++) {
+         let total = 0;
+
+         for (let j = i - numOfDays; j < i; j++) {
+            total += dailyArray[j];
+         }
+         let grandTotal = total / numOfDays;
+
+         avg7Array.push(grandTotal.toFixed(0));
+      }
+
+      for (let i = 0; i < lastInt - 1; i++) {
+         let obj = {};
+         obj["date"] = dateArray[i];
+         obj["cases"] = dailyArray[i];
+         obj["sevenDayAvg"] = avg7Array[i];
+
+         combinedArray.push(obj);
+      }
+
+      return combinedArray;
+   }
+};
+
+export const concatObject = (obj1, obj2) => {
+   const obj3 = Object.entries(obj2).forEach(([key, value]) => {
+      obj1[key] = value;
+   });
+   return obj3;
 };

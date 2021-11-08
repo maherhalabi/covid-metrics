@@ -23,8 +23,8 @@ const CountryPicker = ({
    return (
       <ListGroup
          style={{
-            maxHeight: "65vh",
-            maxWidth: "300px",
+            maxHeight: "85vh",
+            maxWidth: "400px",
             overflow: "scroll",
          }}
       >

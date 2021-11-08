@@ -25,7 +25,14 @@ const Content = ({
    });
 
    return (
-      <div>
+      <div
+         style={{
+            border: "2px solid white",
+            padding: "30px",
+            borderRadius: "3px",
+            backgroundColor: "green",
+         }}
+      >
          <div style={{ display: "flex", flexDirection: "row" }}>
             <Cards
                choice={choice}

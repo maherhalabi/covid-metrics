@@ -21,6 +21,12 @@ import {
    fetchVaccineCountryHistory,
    fetchVaccineWorldwideHistory,
 } from "../../../api";
+import {
+   concatObject,
+   sevenDayAverage,
+   worldwideDailyCases,
+   worldwideTest,
+} from "../../Utils/Math/PercentageDifference";
 
 const Chart = ({
    worldwideData,
@@ -89,17 +95,22 @@ const Chart = ({
          Object.values(vaccineWorldwide).length - 1
       ];
 
-   const worldwideCasesAndDeaths = [
-      ...casesTimeline,
-      ...deathsTimeline,
-      ...dosesTimeline,
-   ];
+   const worldwideCasesAndDeaths = [...casesTimeline, ...deathsTimeline];
 
    const countryCasesAndDeaths = [
       ...countryCasesTimeline,
       ...countryDeathsTimeline,
-      ...countryVaccineTimeline,
    ];
+
+   const sevenDayAvgArray = [];
+   const cases = worldwideDailyCases(
+      worldwideHistory.cases,
+      countryHistory.timeline.cases,
+      sevenDayAvgArray,
+      worldwideToggle
+   );
+
+   console.log(cases);
 
    const groupByDate = (array) =>
       array.reduce((results, item) => {
@@ -117,13 +128,23 @@ const Chart = ({
       }, []);
 
    return (
-      <div>
+      <div
+         style={{
+            padding: "30px",
+            border: "2px solid white",
+            backgroundColor: "white",
+         }}
+      >
          <div style={{ display: "flex", flexDirection: "row" }}>
             <Line_Chart_Template
                worldwideToggle={worldwideToggle}
-               worldwideTimeline={groupByDate(worldwideCasesAndDeaths)}
-               countryTimeline={groupByDate(countryCasesAndDeaths)}
-               title={"Cases"}
+               data={worldwideDailyCases(
+                  worldwideHistory.cases,
+                  countryHistory.timeline.cases,
+                  sevenDayAvgArray,
+                  worldwideToggle
+               )}
+               title={"New Reported Cases"}
                color={"#8884d8"}
             />
          </div>

@@ -1,8 +1,8 @@
+import moment from "moment";
 import React from "react";
 import CountUp from "react-countup";
 import {
    Area,
-   AreaChart,
    CartesianGrid,
    ResponsiveContainer,
    Tooltip,
@@ -11,9 +11,33 @@ import {
    LineChart,
    Legend,
    Line,
+   ComposedChart,
 } from "recharts";
 
 const Line_Chart_Template = (props) => {
+   const CustomTooltip = ({ active, payload, label }) => {
+      if (active && payload && payload.length) {
+         return (
+            <div
+               style={{
+                  background: "#F9F6EE",
+                  padding: "20px",
+                  color: "black",
+               }}
+            >
+               <div style={{ fontSize: "15px" }}>{`${moment(label).format(
+                  "LL"
+               )}`}</div>
+               <div style={{ border: "1px solid black", opacity: 0.2 }} />
+               <div>{`New Cases: ${payload[0].value}`}</div>
+               <div>{`7-Day Average: ${payload[1].value}`}</div>
+            </div>
+         );
+      }
+
+      return null;
+   };
+
    return (
       <div
          style={{
@@ -26,18 +50,14 @@ const Line_Chart_Template = (props) => {
 
          <div style={{ width: "100%" }}>
             <ResponsiveContainer width="100%" aspect={4.0 / 3.0}>
-               <LineChart
-                  width={300}
-                  height={300}
-                  data={
-                     props.worldwideToggle
-                        ? props.worldwideTimeline
-                        : props.countryTimeline
-                  }
+               <ComposedChart
+                  width={500}
+                  height={400}
+                  data={props.data}
                   margin={{
                      top: 10,
-                     right: 0,
-                     left: 50,
+                     right: 30,
+                     left: 0,
                      bottom: 0,
                   }}
                >
@@ -48,28 +68,30 @@ const Line_Chart_Template = (props) => {
                      minTickGap={6}
                      fontSizeAdjust={0.45}
                   />
-                  <YAxis dx={-5} />
-                  <Tooltip />
-                  <Legend />
-                  <Line
+                  <YAxis axisLine={false} />
+                  <Tooltip content={<CustomTooltip />} />
+                  <Area
                      type="monotone"
-                     dataKey="Cases"
+                     dataKey="cases"
                      stroke="#8884d8"
-                     activeDot={{ r: 8 }}
+                     fill="#8884d8"
+                     name="Daily Cases"
                   />
                   <Line
                      type="monotone"
-                     dataKey="Deaths"
-                     stroke="#FF0000"
-                     activeDot={{ r: 8 }}
+                     dataKey="sevenDayAvg"
+                     stroke="#82ca9d"
+                     strokeWidth={4}
+                     strokeOpacity={0.9}
+                     dot={false}
+                     name="7-Day Average"
                   />
-                  <Line
-                     type="monotone"
-                     dataKey="Doses"
-                     stroke="#006400"
-                     activeDot={{ r: 8 }}
+                  <Legend
+                     verticalAlign="top"
+                     align="center"
+                     wrapperStyle={{ top: -1 }}
                   />
-               </LineChart>
+               </ComposedChart>
             </ResponsiveContainer>
          </div>
       </div>
