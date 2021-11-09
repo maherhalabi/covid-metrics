@@ -83,7 +83,7 @@ export const fetchVaccineWorldwideTotal = async (useState) => {
          .get(`${url}/vaccine/coverage`)
          .then((item) => {
             const data = item.data;
-            useState(data);
+            useState(Object.values(data)[Object.values(data).length - 1]);
          });
    } catch (e) {
       console.log(e);
@@ -93,10 +93,12 @@ export const fetchVaccineWorldwideTotal = async (useState) => {
 export const fetchVaccineTotalByCountry = async (useState, country) => {
    try {
       const response = await axios
-         .get(`${url}/vaccine/coverage/${country}?lastdays=1`)
+         .get(`${url}/vaccine/coverage/countries/${country}`)
          .then((item) => {
-            const data = item.data;
-            useState(data[data.length - 1]);
+            const data = Object.values(item.data.timeline)[
+               Object.values(item.data.timeline).length - 1
+            ];
+            useState(data);
          });
    } catch (e) {
       console.log(e);
@@ -123,7 +125,6 @@ export const fetchVaccineWorldwideHistory = async (useState) => {
          .get(`${url}/vaccine/coverage?lastdays=all`)
          .then((item) => {
             const data = item.data;
-            console.log("APUI", data);
             useState(data);
          });
    } catch (e) {

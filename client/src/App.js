@@ -25,8 +25,14 @@ const App = () => {
       <div style={{ backgroundColor: "black" }}>
          <Header title={title} />
          <Container>
-            <Row>
-               <Col md={3} className="col-centered">
+            <Row style={{ height: "80vh" }}>
+               <Col
+                  md={3}
+                  style={{
+                     height: "80vh",
+                     maxWidth: "400px",
+                  }}
+               >
                   <DockLeft
                      setChoice={setChoice}
                      worldwideData={worldwideData}

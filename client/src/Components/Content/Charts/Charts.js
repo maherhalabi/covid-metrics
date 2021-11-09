@@ -23,10 +23,14 @@ import {
 } from "../../../api";
 import {
    concatObject,
+   last90Days,
    sevenDayAverage,
    worldwideDailyCases,
    worldwideTest,
 } from "../../Utils/Math/PercentageDifference";
+import Bar_Chart_Template from "../../Utils/Bar_Chart_Template";
+import { ButtonGroup, Dropdown } from "react-bootstrap";
+import Button from "@restart/ui/esm/Button";
 
 const Chart = ({
    worldwideData,
@@ -38,19 +42,13 @@ const Chart = ({
    countryHistory,
    setCountryHistory,
 }) => {
-   const [vaccineWorldwide, setVaccineWorldwide] = useState({});
-   const [vaccineCountryHistory, setVaccineCountryHistory] = useState({});
-   const [vaccineWorldwideHistory, setVaccineWorldwideHistory] = useState({});
-
    useEffect(() => {
       if (!worldwideToggle) {
          fetchCountryHistoryData(setCountryHistory, choice);
-         fetchVaccineTotalByCountry(setCountryHistory, choice);
-         fetchVaccineCountryHistory(setVaccineCountryHistory, choice);
+         // fetchVaccineTotalByCountry(setCountryHistory, choice);
       } else {
          fetchHistoryData(setWorldwideHistory);
-         fetchVaccineWorldwideTotal(setVaccineWorldwide);
-         fetchVaccineWorldwideHistory(setVaccineWorldwideHistory);
+         // fetchVaccineWorldwideTotal(setVaccineWorldwide);
       }
    }, [choice]);
 
@@ -66,17 +64,17 @@ const Chart = ({
       }
    );
 
-   const dosesTimeline = Object.entries(vaccineWorldwideHistory).map(
-      ([key, value]) => {
-         return { date: key, Doses: value };
-      }
-   );
+   // const dosesTimeline = Object.entries(vaccineWorldwideHistory).map(
+   //    ([key, value]) => {
+   //       return { date: key, Doses: value };
+   //    }
+   // );
 
-   const countryVaccineTimeline = Object.entries(vaccineCountryHistory).map(
-      ([key, value]) => {
-         return { date: key, Doses: value };
-      }
-   );
+   // const countryVaccineTimeline = Object.entries(vaccineCountryHistory).map(
+   //    ([key, value]) => {
+   //       return { date: key, Doses: value };
+   //    }
+   // );
 
    const countryCasesTimeline = Object.entries(
       countryHistory.timeline.cases
@@ -90,12 +88,12 @@ const Chart = ({
       return { date: key, Deaths: value };
    });
 
-   const worldwideTotalVaccinated =
-      Object.values(vaccineWorldwide)[
-         Object.values(vaccineWorldwide).length - 1
-      ];
+   // const worldwideTotalVaccinated =
+   //    Object.values(vaccineWorldwide)[
+   //       Object.values(vaccineWorldwide).length - 1
+   //    ];
 
-   const worldwideCasesAndDeaths = [...casesTimeline, ...deathsTimeline];
+   // const worldwideCasesAndDeaths = [...casesTimeline, ...deathsTimeline];
 
    const countryCasesAndDeaths = [
       ...countryCasesTimeline,
@@ -110,7 +108,16 @@ const Chart = ({
       worldwideToggle
    );
 
-   console.log(cases);
+   console.log(last90Days(cases));
+
+   const [buttonChoice, setButtonChoice] = useState("All Time");
+
+   useEffect(() => {
+      console.log(buttonChoice === "All Time");
+   }, [buttonChoice]);
+   const handleClick = (e) => {
+      setButtonChoice(e.target.getAttribute("name"));
+   };
 
    const groupByDate = (array) =>
       array.reduce((results, item) => {
@@ -135,19 +142,38 @@ const Chart = ({
             backgroundColor: "white",
          }}
       >
+         <ButtonGroup
+            aria-label="Basic example"
+            onClick={(e) => handleClick(e)}
+         >
+            <Button variant="secondary" name="All Time">
+               All Time
+            </Button>
+            <Button variant="secondary" name="Last 90 Days">
+               Last 90 Days
+            </Button>
+         </ButtonGroup>
          <div style={{ display: "flex", flexDirection: "row" }}>
-            <Line_Chart_Template
-               worldwideToggle={worldwideToggle}
-               data={worldwideDailyCases(
-                  worldwideHistory.cases,
-                  countryHistory.timeline.cases,
-                  sevenDayAvgArray,
-                  worldwideToggle
-               )}
-               title={"New Reported Cases"}
-               color={"#8884d8"}
-            />
+            {buttonChoice === "All Time" ? (
+               <Line_Chart_Template
+                  worldwideToggle={worldwideToggle}
+                  data={worldwideDailyCases(
+                     worldwideHistory.cases,
+                     countryHistory.timeline.cases,
+                     sevenDayAvgArray,
+                     worldwideToggle
+                  )}
+                  color={"#8884d8"}
+               />
+            ) : (
+               <Bar_Chart_Template
+                  worldwideToggle={worldwideToggle}
+                  data={last90Days(cases)}
+                  color={"#8884d8"}
+               />
+            )}
          </div>
+         <div></div>
       </div>
    );
 };

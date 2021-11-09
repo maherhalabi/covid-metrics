@@ -9,6 +9,8 @@ const Card_Template = (props) => {
             <Card.Header>{props.title}</Card.Header>
             <Card.Body>
                <Card.Title>{props.number}</Card.Title>
+               <Card.Title>{props.oneDay}</Card.Title>
+               <Card.Title>{props.fourteenDays}</Card.Title>
             </Card.Body>
          </Card>
       </div>

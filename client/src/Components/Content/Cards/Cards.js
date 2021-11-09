@@ -16,6 +16,8 @@ import {
    fetchCurrentWorldWideData,
    fetchCurrentCountryData,
    fetchCountryHistoryData,
+   fetchVaccineWorldwideTotal,
+   fetchVaccineTotalByCountry,
 } from "../../../api";
 import { countries } from "../../Utils/Arrays & Objects/Countries";
 import CountryPicker from "../../DockLeft/CountryPicker/CountryPicker";
@@ -45,11 +47,16 @@ const Cards = ({
    worldwideHistory,
    countryHistory,
 }) => {
+   const [vaccinesCountry, setVaccinesCountry] = useState();
+   const [vaccinesWorldwide, setVaccinesWorldwide] = useState();
+
    useEffect(() => {
       if (!worldwideToggle) {
          fetchCurrentCountryData(setCountryData, choice);
+         fetchVaccineTotalByCountry(setVaccinesCountry, choice);
       } else {
          fetchCurrentWorldWideData(setWorldwideData);
+         fetchVaccineWorldwideTotal(setVaccinesWorldwide);
       }
 
       // window.addEventListener("resize", updateDimensions);
@@ -125,7 +132,34 @@ const Cards = ({
             "Deaths"
          ),
       },
+      {
+         title: "Vaccines Given",
+         worldwideNumber: vaccinesWorldwide,
+         countryNumber: vaccinesCountry,
+      },
    ];
+
+   function abbrNum(number, decPlaces) {
+      decPlaces = Math.pow(10, decPlaces);
+
+      var abbrev = ["k", "m", "b", "t"];
+
+      for (var i = abbrev.length - 1; i >= 0; i--) {
+         var size = Math.pow(10, (i + 1) * 3);
+         if (size <= number) {
+            number = Math.round((number * decPlaces) / size) / decPlaces;
+
+            if (number == 1000 && i < abbrev.length - 1) {
+               number = 1;
+               i++;
+            }
+            number += abbrev[i];
+            break;
+         }
+      }
+
+      return number;
+   }
 
    const combineCasesAndDeathsArray = [
       ...percentageOfActiveArray,
@@ -151,45 +185,62 @@ const Cards = ({
       <div
          style={{
             width: "100%",
-            padding: "30px",
-            backgroundColor: "grey",
+
+            backgroundColor: "white",
             border: "2px solid white",
             borderRadius: "3px",
          }}
       >
-         <h3>Cases Overview</h3>
+         <Table striped bordered hover>
+            <thead>
+               <tr>
+                  <th></th>
+                  <th>Today</th>
+                  <th>14-Day Amount</th>
+               </tr>
+            </thead>
+            <tbody>
+               <tr>
+                  <td>Cases</td>
+                  <td>{dataList[0].sumOf1ActiveDay.toLocaleString()}</td>
+                  <td>{dataList[0].sumof14ActiveDays.toLocaleString()}</td>
+               </tr>
+               <tr>
+                  <td>Deaths</td>
+                  <td>{dataList[2].sumOf1ActiveDay.toLocaleString()}</td>
+                  <td>{dataList[2].sumof14ActiveDays.toLocaleString()}</td>
+               </tr>
+            </tbody>
+         </Table>
          <div
             style={{
                display: "flex",
                justifyContent: "space-between",
                flexWrap: "wrap",
+               padding: "30px",
             }}
          >
-            {dataList.map((dataItem) => {
-               const {
-                  title,
-                  worldwideNumber,
-                  worldWidePerMillion,
-                  countryNumber,
-                  sumO1ActiveDay,
-                  sumO14ActiveDays,
-               } = dataItem;
-               return (
-                  <div
-                     style={{
-                        flex: 1,
-                     }}
-                  >
-                     <Card_Template
-                        number={
-                           worldwideToggle ? worldwideNumber : countryNumber
-                        }
-                        title={title}
-                     />
-                  </div>
-               );
-            })}
-            <div style={{ flex: 1 }}>
+            <div>
+               <Card_Template
+                  number={
+                     worldwideToggle
+                        ? dataList[1].worldwideNumber
+                        : dataList[1].countryNumber
+                  }
+                  title={dataList[1].title}
+               />
+            </div>
+            <div>
+               <Card_Template
+                  number={
+                     worldwideToggle
+                        ? dataList[3].worldwideNumber
+                        : dataList[3].countryNumber
+                  }
+                  title={dataList[3].title}
+               />
+            </div>
+            <div>
                <Card_Template
                   number={`${findFirstCase(
                      worldwideToggle,
@@ -197,26 +248,6 @@ const Cards = ({
                      countryHistory
                   )} Days Ago`}
                   title="First Case"
-               />
-            </div>
-         </div>
-         <div style={{ display: "flex", width: "100%", padding: "30px" }}>
-            <div style={{ paddingLeft: "10px", flex: 1 }}>
-               <Card_Difference_Template
-                  OneDayDifference={dataList[0].sumOf1ActiveDay}
-                  FourteenDayDifference={dataList[0].sumof14ActiveDays}
-                  title={dataList[0].title}
-                  worldwideHistory={worldwideHistory}
-                  countryHistory={countryHistory}
-                  worldwideToggle={worldwideToggle}
-                  percentageOfDeathsArray={percentageOfDeathsArray}
-               />
-            </div>
-            <div style={{ paddingLeft: "10px", flex: 1 }}>
-               <Card_Difference_Template
-                  OneDayDifference={dataList[2].sumOf1ActiveDay}
-                  FourteenDayDifference={dataList[2].sumof14ActiveDays}
-                  title={dataList[2].title}
                />
             </div>
          </div>

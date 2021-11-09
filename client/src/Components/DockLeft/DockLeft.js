@@ -21,11 +21,13 @@ const DockLeft = ({
    return (
       <div
          style={{
-            maxHeight: "100%",
             border: "2px solid white",
             borderRadius: "3px",
             backgroundColor: "green",
-            padding: "30px",
+            padding: "10px",
+            position: "relative",
+            height: "100%",
+            overflow: "hidden",
          }}
       >
          <FilterCountry

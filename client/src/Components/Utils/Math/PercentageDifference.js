@@ -202,9 +202,12 @@ export const worldwideDailyCases = (
    }
 };
 
-export const concatObject = (obj1, obj2) => {
-   const obj3 = Object.entries(obj2).forEach(([key, value]) => {
-      obj1[key] = value;
-   });
-   return obj3;
+export const last90Days = (combinedArray) => {
+   let last90daysArray = [];
+
+   for (let i = combinedArray.length - 90; i < combinedArray.length; i++) {
+      last90daysArray.push(combinedArray[i]);
+   }
+
+   return last90daysArray;
 };

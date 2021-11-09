@@ -12,9 +12,10 @@ import {
    Legend,
    Line,
    ComposedChart,
+   Bar,
 } from "recharts";
 
-const Line_Chart_Template = (props) => {
+const Bar_Chart_Template = (props) => {
    const CustomTooltip = ({ active, payload, label }) => {
       if (active && payload && payload.length) {
          return (
@@ -70,7 +71,7 @@ const Line_Chart_Template = (props) => {
                   />
                   <YAxis axisLine={false} />
                   <Tooltip content={<CustomTooltip />} />
-                  <Area
+                  <Bar
                      type="monotone"
                      dataKey="cases"
                      stroke="#8884d8"
@@ -98,4 +99,4 @@ const Line_Chart_Template = (props) => {
    );
 };
 
-export default Line_Chart_Template;
+export default Bar_Chart_Template;

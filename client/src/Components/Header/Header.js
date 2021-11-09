@@ -7,13 +7,13 @@ const Header = ({ title }) => {
    return (
       <div
          className="container align-center"
-         style={{ height: "7.5vh", color: "white" }}
+         style={{ height: "10vh", color: "white" }}
       >
-         <div className="row" style={{ alignItems: "center" }}>
-            <div className="col-sm">
+         <div className="column" style={{ alignItems: "center" }}>
+            <div>
                <Title title={title} />
             </div>
-            <div className="col-sm">
+            <div>
                <LastUpdated />
             </div>
          </div>

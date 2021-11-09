@@ -3,8 +3,11 @@ import React from "react";
 const Title = ({ title }) => {
    return (
       <div
-         className="text-left"
-         style={{ display: "flex", alignItems: "center" }}
+         style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+         }}
       >
          <div style={{ fontSize: "40px", fontStyle: "bold" }}>
             Covid-19 Tracker

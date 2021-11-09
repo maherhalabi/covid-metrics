@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Table } from "react-bootstrap";
 import Cards from "./Cards/Cards";
 import Charts from "./Charts/Charts";
 
@@ -31,8 +32,21 @@ const Content = ({
             padding: "30px",
             borderRadius: "3px",
             backgroundColor: "green",
+            height: "100%",
          }}
       >
+         <div>
+            <Charts
+               choice={choice}
+               worldwideToggle={worldwideToggle}
+               worldwideData={worldwideData}
+               countryData={countryData}
+               countryHistory={countryHistory}
+               setCountryHistory={setCountryHistory}
+               worldwideHistory={worldwideHistory}
+               setWorldwideHistory={setWorldwideHistory}
+            />
+         </div>
          <div style={{ display: "flex", flexDirection: "row" }}>
             <Cards
                choice={choice}
@@ -47,17 +61,9 @@ const Content = ({
                setWorldwideHistory={setWorldwideHistory}
             />
          </div>
-
-         <Charts
-            choice={choice}
-            worldwideToggle={worldwideToggle}
-            worldwideData={worldwideData}
-            countryData={countryData}
-            countryHistory={countryHistory}
-            setCountryHistory={setCountryHistory}
-            worldwideHistory={worldwideHistory}
-            setWorldwideHistory={setWorldwideHistory}
-         />
+         <div>
+            
+         </div>
       </div>
    );
 };
