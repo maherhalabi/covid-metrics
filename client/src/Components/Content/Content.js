@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { Table } from "react-bootstrap";
+import MapChart from "../Utils/MapChart";
 import Cards from "./Cards/Cards";
+import CapitaChart from "./Charts/CapitaChart";
 import Charts from "./Charts/Charts";
-
+import ReactTooltip from "react-tooltip";
 const Content = ({
    choice,
    worldwideToggle,
@@ -11,6 +13,12 @@ const Content = ({
    countryData,
    setCountryData,
 }) => {
+   const [content, setContent] = useState({
+      countryName: "",
+      countryCases: "",
+      countryPerMillion: "",
+   });
+
    const [worldwideHistory, setWorldwideHistory] = useState({
       cases: {},
       deaths: {},
@@ -25,6 +33,9 @@ const Content = ({
       },
    });
 
+   const [randomID, setRandomID] = useState(String(Math.random()));
+
+   console.log(content);
    return (
       <div
          style={{
@@ -62,7 +73,34 @@ const Content = ({
             />
          </div>
          <div>
-            
+            <CapitaChart
+               choice={choice}
+               worldwideToggle={worldwideToggle}
+               worldwideData={worldwideData}
+               countryData={countryData}
+               countryHistory={countryHistory}
+               setCountryHistory={setCountryHistory}
+               worldwideHistory={worldwideHistory}
+               setWorldwideHistory={setWorldwideHistory}
+            />
+         </div>
+         <div style={{ background: "black" }}>
+            <MapChart setTooltipContent={setContent} />
+            <ReactTooltip data-for={randomID}>
+               {/* {content.current.countryCases !== "" ? ( */}
+               <div style={{ padding: "10px" }}>
+                  <h4>{content.countryName}</h4>
+                  <div
+                     style={{
+                        borderBottom: "1px solid white",
+                        marginBottom: "10px",
+                     }}
+                  ></div>
+                  <h6>Active Cases: {content.countryCases}</h6>
+                  <h6>Per Hundred: {content.countryPerMillion}</h6>
+               </div>
+               {/* // ) : null} */}
+            </ReactTooltip>
          </div>
       </div>
    );

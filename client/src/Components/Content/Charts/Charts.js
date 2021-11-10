@@ -11,7 +11,7 @@ import {
    Legend,
    Line,
 } from "recharts";
-import Line_Chart_Template from "../../Utils/Line_Chart_Template";
+import Line_Chart_Template from "../../Utils/ComposeChart";
 import {
    fetchHistoryData,
    fetchCountryHistoryData,
@@ -22,11 +22,8 @@ import {
    fetchVaccineWorldwideHistory,
 } from "../../../api";
 import {
-   concatObject,
    last90Days,
-   sevenDayAverage,
    worldwideDailyCases,
-   worldwideTest,
 } from "../../Utils/Math/PercentageDifference";
 import Bar_Chart_Template from "../../Utils/Bar_Chart_Template";
 import { ButtonGroup, Dropdown } from "react-bootstrap";
@@ -173,7 +170,6 @@ const Chart = ({
                />
             )}
          </div>
-         <div></div>
       </div>
    );
 };

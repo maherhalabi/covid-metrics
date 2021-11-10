@@ -25,7 +25,7 @@ const App = () => {
       <div style={{ backgroundColor: "black" }}>
          <Header title={title} />
          <Container>
-            <Row style={{ height: "80vh" }}>
+            <Row style={{}}>
                <Col
                   md={3}
                   style={{

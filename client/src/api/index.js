@@ -131,3 +131,14 @@ export const fetchVaccineWorldwideHistory = async (useState) => {
       console.log(e);
    }
 };
+
+export const fetchAllCountryData = async (useState) => {
+   https: try {
+      const response = await axios.get(`${url}/countries/`).then((item) => {
+         const data = item.data;
+         useState(data);
+      });
+   } catch (e) {
+      console.log(e);
+   }
+};

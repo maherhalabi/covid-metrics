@@ -14,7 +14,7 @@ import {
    ComposedChart,
 } from "recharts";
 
-const Line_Chart_Template = (props) => {
+const ComposeChart = (props) => {
    const CustomTooltip = ({ active, payload, label }) => {
       if (active && payload && payload.length) {
          return (
@@ -98,4 +98,4 @@ const Line_Chart_Template = (props) => {
    );
 };
 
-export default Line_Chart_Template;
+export default ComposeChart;

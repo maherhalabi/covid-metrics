@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Card_Template from "../../Utils/Card_Template";
-import Card_Difference_Template from "../../Utils/Card_Difference_Template";
+
 import {
    Col,
    ListGroup,
@@ -9,7 +9,7 @@ import {
    Card,
    ListGroupItem,
 } from "react-bootstrap";
-import { BrushBarChart } from "../../Utils/BrushBarChart";
+
 import { ResponsiveContainer } from "recharts";
 import HeatMap from "react-heatmap-grid";
 import {
@@ -30,11 +30,7 @@ import {
    findSumOf1RecoveredDay,
    findFirstCase,
 } from "../../Utils/Math/SumDifference";
-import {
-   createPercentageArray,
-   fourteenDayActivePercentage,
-   fourteenDayDeathsPercentage,
-} from "../../Utils/Math/PercentageDifference";
+import {} from "../../Utils/Math/PercentageDifference";
 import moment from "moment";
 
 const Cards = ({
@@ -83,13 +79,13 @@ const Cards = ({
             worldwideHistory,
             countryHistory
          ),
-         createPercentageArray: createPercentageArray(
-            worldwideHistory.cases,
-            countryHistory.timeline.cases,
-            worldwideToggle,
-            percentageOfActiveArray,
-            "Cases"
-         ),
+         // createPercentageArray: createPercentageArray(
+         //    worldwideHistory.cases,
+         //    countryHistory.timeline.cases,
+         //    worldwideToggle,
+         //    percentageOfActiveArray,
+         //    "Cases"
+         // ),
       },
       {
          title: "Recovered",
@@ -124,13 +120,13 @@ const Cards = ({
             worldwideHistory,
             countryHistory
          ),
-         createPercentageArray: createPercentageArray(
-            worldwideHistory.deaths,
-            countryHistory.timeline.deaths,
-            worldwideToggle,
-            percentageOfDeathsArray,
-            "Deaths"
-         ),
+         // createPercentageArray: createPercentageArray(
+         //    worldwideHistory.deaths,
+         //    countryHistory.timeline.deaths,
+         //    worldwideToggle,
+         //    percentageOfDeathsArray,
+         //    "Deaths"
+         // ),
       },
       {
          title: "Vaccines Given",
