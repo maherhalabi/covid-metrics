@@ -18,15 +18,9 @@ const colorScale = scaleLinear()
    .domain([0, 12.5])
    .range(["#ffedea", "#ff5233"]);
 
-const MapChart = ({ setTooltipContent }) => {
-   const [data, setData] = useState([]);
-
-   useEffect(() => {
-      fetchAllCountryData(setData);
-   }, []);
-
-   console.log(data);
-
+const MapChart = ({ setTooltipContent, data }) => {
+   console.log("SDDKSD", data.length);
+   console.log(data == []);
    return (
       <ComposableMap
          projectionConfig={{
@@ -34,9 +28,11 @@ const MapChart = ({ setTooltipContent }) => {
             scale: 147,
          }}
          data-tip=""
+         stroke="black"
+         strokeWidth={0.5}
       >
-         <Sphere stroke="#E4E5E6" strokeWidth={0.5} />
-         <Graticule stroke="#E4E5E6" strokeWidth={0.5} />
+         <Sphere stroke="white" strokeWidth={1} />
+         <Graticule stroke="white" strokeWidth={0.15} />
          {data.length > 0 && (
             <Geographies geography={geoUrl}>
                {({ geographies }) =>
@@ -70,11 +66,7 @@ const MapChart = ({ setTooltipContent }) => {
                            style={{
                               hover: {
                                  fill: "blue",
-                                 outline: "none",
-                              },
-                              pressed: {
-                                 fill: "#E42",
-                                 outline: "none",
+                                 outline: "yellow",
                               },
                            }}
                            fill={

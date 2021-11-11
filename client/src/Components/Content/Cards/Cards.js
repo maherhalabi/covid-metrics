@@ -181,13 +181,12 @@ const Cards = ({
       <div
          style={{
             width: "100%",
-
             backgroundColor: "white",
             border: "2px solid white",
             borderRadius: "3px",
          }}
       >
-         <Table striped bordered hover>
+         <Table striped bordered hover style={{ margin: 0 }}>
             <thead>
                <tr>
                   <th></th>
@@ -211,12 +210,14 @@ const Cards = ({
          <div
             style={{
                display: "flex",
-               justifyContent: "space-between",
+               textAlign: "center",
                flexWrap: "wrap",
-               padding: "30px",
+
+               overflow: "auto",
+               justifyContent: "center",
             }}
          >
-            <div>
+            <div style={{ flex: "0 1 auto", width: "250px", padding: "10px" }}>
                <Card_Template
                   number={
                      worldwideToggle
@@ -226,7 +227,7 @@ const Cards = ({
                   title={dataList[1].title}
                />
             </div>
-            <div>
+            <div style={{ flex: "0 1 auto", width: "250px", padding: "10px" }}>
                <Card_Template
                   number={
                      worldwideToggle
@@ -236,7 +237,7 @@ const Cards = ({
                   title={dataList[3].title}
                />
             </div>
-            <div>
+            <div style={{ flex: "0 1 auto", width: "250px", padding: "10px" }}>
                <Card_Template
                   number={`${findFirstCase(
                      worldwideToggle,

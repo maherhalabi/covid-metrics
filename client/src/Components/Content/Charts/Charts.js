@@ -11,7 +11,7 @@ import {
    Legend,
    Line,
 } from "recharts";
-import Line_Chart_Template from "../../Utils/ComposeChart";
+import ComposeChart from "../../Utils/ComposeChart";
 import {
    fetchHistoryData,
    fetchCountryHistoryData,
@@ -150,9 +150,9 @@ const Chart = ({
                Last 90 Days
             </Button>
          </ButtonGroup>
-         <div style={{ display: "flex", flexDirection: "row" }}>
+         <div>
             {buttonChoice === "All Time" ? (
-               <Line_Chart_Template
+               <ComposeChart
                   worldwideToggle={worldwideToggle}
                   data={worldwideDailyCases(
                      worldwideHistory.cases,

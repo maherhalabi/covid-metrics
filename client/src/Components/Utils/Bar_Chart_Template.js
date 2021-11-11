@@ -49,8 +49,8 @@ const Bar_Chart_Template = (props) => {
       >
          <h4>{props.title}</h4>
 
-         <div style={{ width: "100%" }}>
-            <ResponsiveContainer width="100%" aspect={4.0 / 3.0}>
+         <div>
+            <ResponsiveContainer aspect={10.0 / 3.0}>
                <ComposedChart
                   width={500}
                   height={400}

@@ -1,10 +1,12 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { Table } from "react-bootstrap";
 import MapChart from "../Utils/MapChart";
 import Cards from "./Cards/Cards";
 import CapitaChart from "./Charts/CapitaChart";
 import Charts from "./Charts/Charts";
 import ReactTooltip from "react-tooltip";
+import { fetchAllCountryData } from "../../api";
+import HeatMap from "./Maps/HeatMap";
 const Content = ({
    choice,
    worldwideToggle,
@@ -13,12 +15,6 @@ const Content = ({
    countryData,
    setCountryData,
 }) => {
-   const [content, setContent] = useState({
-      countryName: "",
-      countryCases: "",
-      countryPerMillion: "",
-   });
-
    const [worldwideHistory, setWorldwideHistory] = useState({
       cases: {},
       deaths: {},
@@ -33,9 +29,16 @@ const Content = ({
       },
    });
 
-   const [randomID, setRandomID] = useState(String(Math.random()));
+   const [data, setData] = useState([]);
 
-   console.log(content);
+   useEffect(() => {
+      if (data.length === 0) {
+         fetchAllCountryData(setData);
+      } else {
+         return;
+      }
+   }, []);
+
    return (
       <div
          style={{
@@ -85,22 +88,7 @@ const Content = ({
             />
          </div>
          <div style={{ background: "black" }}>
-            <MapChart setTooltipContent={setContent} />
-            <ReactTooltip data-for={randomID}>
-               {/* {content.current.countryCases !== "" ? ( */}
-               <div style={{ padding: "10px" }}>
-                  <h4>{content.countryName}</h4>
-                  <div
-                     style={{
-                        borderBottom: "1px solid white",
-                        marginBottom: "10px",
-                     }}
-                  ></div>
-                  <h6>Active Cases: {content.countryCases}</h6>
-                  <h6>Per Hundred: {content.countryPerMillion}</h6>
-               </div>
-               {/* // ) : null} */}
-            </ReactTooltip>
+            <HeatMap data={data} />
          </div>
       </div>
    );
