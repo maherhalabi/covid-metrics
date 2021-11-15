@@ -1,0 +1,17 @@
+.container {
+    display: flex;
+    align-items: center;
+    justify-items: space-around;
+    max-height: 10vh;
+    font-family: 'Source Serif Pro', serif;
+}
+
+.logo {
+    width: 41px;
+    height:40px;
+}
+
+.footerContent {
+    margin: 2em;
+}
+
