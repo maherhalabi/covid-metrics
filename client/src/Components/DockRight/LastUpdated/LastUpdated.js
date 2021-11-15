@@ -16,7 +16,7 @@ const LastUpdated = () => {
             textAlign: "center",
             fontSize: "25px",
             color: "black",
-            backgroundColor: "#F6EEC4",
+            backgroundColor: "#52FFB8",
             borderRadius: "3px",
             padding: "5px",
          }}

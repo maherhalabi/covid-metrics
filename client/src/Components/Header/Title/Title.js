@@ -6,24 +6,24 @@ const Title = ({ title }) => {
          style={{
             display: "flex",
             alignItems: "center",
-            justifyContent: "center",
+
+            color: "white",
          }}
       >
-         <div style={{ fontSize: "40px", fontStyle: "bold" }}>
+         <div style={{ fontSize: "30px", fontStyle: "bold" }}>
             Covid-19 Tracker
          </div>
          <div
             style={{
-               fontSize: "40px",
+               fontSize: "60px",
                fontStyle: "bold",
                marginRight: "5px",
-               marginLeft: "5px",
-               color: "green",
+               color: "#52FFB8",
             }}
          >
             /
          </div>
-         <div style={{ fontSize: "30px", fontStyle: "bold", color: "green" }}>
+         <div style={{ fontSize: "60px", fontStyle: "bold", color: "#52FFB8" }}>
             {title}
          </div>
       </div>

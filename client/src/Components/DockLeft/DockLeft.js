@@ -23,7 +23,7 @@ const DockLeft = ({
          style={{
             border: "2px solid white",
             borderRadius: "3px",
-            backgroundColor: "green",
+            backgroundColor: "#615756",
             padding: "10px",
             position: "relative",
             height: "100%",
@@ -37,6 +37,22 @@ const DockLeft = ({
             setAllCountryData={setAllCountryData}
             countries={countries}
          />
+         <div
+            className="mb-1"
+            style={{ padding: "0.5rem 1rem", color: "white" }}
+         >
+            <div
+               style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  fontSize: "10px",
+               }}
+            >
+               <div>Country</div>
+               <div>Active Cases</div>
+            </div>
+         </div>
          <CountryPicker
             setChoice={setChoice}
             countries={countries}

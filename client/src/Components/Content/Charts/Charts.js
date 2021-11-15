@@ -26,8 +26,7 @@ import {
    worldwideDailyCases,
 } from "../../Utils/Math/PercentageDifference";
 import Bar_Chart_Template from "../../Utils/Bar_Chart_Template";
-import { ButtonGroup, Dropdown } from "react-bootstrap";
-import Button from "@restart/ui/esm/Button";
+import { ButtonGroup, Dropdown, Button } from "react-bootstrap";
 
 const Chart = ({
    worldwideData,
@@ -136,14 +135,14 @@ const Chart = ({
          style={{
             padding: "30px",
             border: "2px solid white",
-            backgroundColor: "white",
+            backgroundColor: "black",
          }}
       >
-         <ButtonGroup
-            aria-label="Basic example"
-            onClick={(e) => handleClick(e)}
-         >
-            <Button variant="secondary" name="All Time">
+         <ButtonGroup onClick={(e) => handleClick(e)}>
+            <Button
+               style={{ background: "#52FFB8", color: "black", border: "none" }}
+               name="All Time"
+            >
                All Time
             </Button>
             <Button variant="secondary" name="Last 90 Days">
@@ -160,13 +159,13 @@ const Chart = ({
                      sevenDayAvgArray,
                      worldwideToggle
                   )}
-                  color={"#8884d8"}
+                  color={"#52FFB8"}
                />
             ) : (
                <Bar_Chart_Template
                   worldwideToggle={worldwideToggle}
                   data={last90Days(cases)}
-                  color={"#8884d8"}
+                  color={"#52FFB8"}
                />
             )}
          </div>

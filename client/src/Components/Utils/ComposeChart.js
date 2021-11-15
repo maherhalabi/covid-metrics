@@ -48,14 +48,14 @@ const ComposeChart = (props) => {
       >
          <h4>{props.title}</h4>
 
-         <div>
-            <ResponsiveContainer width="100%" aspect={10.0 / 3.0}>
+         <div style={{ height: "20vh" }}>
+            <ResponsiveContainer width="100%" height="100%">
                <ComposedChart
                   data={props.data}
                   margin={{
                      top: 10,
-                     right: 40,
-                     left: 0,
+                     right: 0,
+                     left: 40,
                      bottom: 0,
                   }}
                >
@@ -65,14 +65,15 @@ const ComposeChart = (props) => {
                      dy={10}
                      minTickGap={6}
                      fontSizeAdjust={0.45}
+                     stroke="white"
                   />
-                  <YAxis axisLine={false} />
+                  <YAxis axisLine={false} stroke="white" />
                   <Tooltip content={<CustomTooltip />} />
                   <Area
                      type="monotone"
                      dataKey="cases"
-                     stroke="#8884d8"
-                     fill="#8884d8"
+                     stroke="#F95738"
+                     fill="#F95738"
                      name="Daily Cases"
                   />
                   <Line

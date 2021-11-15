@@ -29,7 +29,7 @@ const FilterCountry = ({
    return (
       <div>
          <Form>
-            <Form.Group className="mb-3">
+            <Form.Group className="mb-1">
                <Form.Control
                   type="email"
                   placeholder="Enter Country"

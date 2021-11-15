@@ -1,35 +1,48 @@
-import React from 'react';
-import styles from './Footer.module.css';
+import React from "react";
+import styles from "./Footer.module.css";
+import { VscGithubAlt } from "react-icons/vsc";
 
 const Footer = () => {
-    return (
-    <div className={styles.container}>
-        <div className={styles.footerContent}>
-            Powered by <a href="https://github.com/jerairrest/react-chartjs-2">React-Charts-JS2</a>
-        </div>
-        <div>
-            |
-        </div>
-        <div className={styles.footerContent}>
-            API by <a href="https://github.com/mathdroid/covid-19-api">Mathdroid</a>
-        </div>
-        <div>
-            |
-        </div>
-        <div className={styles.footerContent}>
-            <a href="https://www.who.int/emergencies/diseases/novel-coronavirus-2019/donate">Donate</a>
-        </div>
-        <div>
-            |
-        </div>
-        <div>
-            |
-        </div>
-        <div className={styles.footerContent}>
-            <a href="https://github.com/mohur"><img  className={styles.logo}src="https://image.flaticon.com/icons/png/512/25/25231.png"></img></a>
-        </div>
-    </div>
-    );
-}
+   return (
+      <div className={styles.container}>
+         <div className={styles.footerContent}>
+            Powered by{" "}
+            <a
+               className={styles.text_color}
+               href="https://www.react-simple-maps.io/"
+            >
+               React Simple Maps
+            </a>{" "}
+            &{" "}
+            <a className={styles.text_color} href="https://recharts.org/en-US/">
+               Recharts
+            </a>
+         </div>
+         <div className={styles.text_color}>|</div>
+         <div className={styles.footerContent}>
+            API:{" "}
+            <a className={styles.text_color} href="https://disease.sh/">
+               disease.sh
+            </a>
+         </div>
+         <div className={styles.text_color}>|</div>
+         <div className={styles.footerContent}>
+            <a
+               className={styles.text_color}
+               href="https://www.who.int/emergencies/diseases/novel-coronavirus-2019/donate"
+            >
+               COVID-19 Donations
+            </a>
+         </div>
+         <div className={styles.text_color}>|</div>
+         <div className={styles.text_color}>|</div>
+         <div className={styles.footerContent}>
+            <a className={styles.text_color} href="https://github.com/3g2">
+               <VscGithubAlt className={styles.logo} />
+            </a>
+         </div>
+      </div>
+   );
+};
 
 export default Footer;

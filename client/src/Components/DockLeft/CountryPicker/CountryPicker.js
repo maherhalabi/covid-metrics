@@ -29,6 +29,7 @@ const CountryPicker = ({
                   display: "flex",
                   flexDirection: "row",
                   justifyContent: "space-between",
+                  backgroundColor: choice === "Worldwide" ? "yellow" : "white",
                }}
                onClick={(e) => handleClick(e)}
             >
@@ -41,6 +42,10 @@ const CountryPicker = ({
                      <ListGroup.Item
                         name={item.country}
                         onClick={(e) => handleClick(e)}
+                        style={{
+                           backgroundColor:
+                              choice === item.country ? "orange" : "white",
+                        }}
                      >
                         <div
                            style={{
@@ -58,6 +63,21 @@ const CountryPicker = ({
                );
             })}
          </ListGroup>
+         <div
+            style={{
+               position: "absolute",
+               bottom: "0px",
+
+               display: "block",
+
+               width: "100%",
+               height: " 150px",
+
+               backgroundImage:
+                  "linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.9) 100%)",
+               pointerEvents: "none",
+            }}
+         ></div>
       </div>
    );
 };

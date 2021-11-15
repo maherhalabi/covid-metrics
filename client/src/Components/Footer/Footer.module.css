@@ -2,16 +2,40 @@
     display: flex;
     align-items: center;
     justify-items: space-around;
-    max-height: 10vh;
-    font-family: 'Source Serif Pro', serif;
+    background-color: #52FFB8;
+    justify-content: center;
+    left: 0;
+    width: 100%;
+    bottom: 0;
+    position: fixed;
+  
 }
 
+.text_color {
+    color: black;
+}
 .logo {
     width: 41px;
     height:40px;
+    color: black;
 }
 
 .footerContent {
-    margin: 2em;
+    margin: 1em;
+    color: black;
 }
 
+a {
+    transition: background-position 275ms ease;
+    background: linear-gradient(to right, 	red, 	red 50%, black 50%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 200% 100%;
+    background-position: 100%;
+    transition: background-position 275ms ease;
+  }
+  a:hover {
+    background-position: 0 100%;
+    color: black
+  }
