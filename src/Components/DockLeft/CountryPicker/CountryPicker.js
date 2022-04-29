@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { ListGroup } from "react-bootstrap";
-
+import { useSnackbar } from "react-simple-snackbar";
 const CountryPicker = ({
    setChoice,
    choice,
@@ -8,10 +8,22 @@ const CountryPicker = ({
    setTitle,
    foundCountries,
    worldwideData,
+   unavailableData,
+   toggleUnavailableData,
 }) => {
+   const [openSnackbar, closeSnackbar] = useSnackbar();
+   useEffect(() => {
+      console.log(choice);
+      if (unavailableData) {
+         openSnackbar(
+            `Some of ${choice}'s information is not available from the API.`
+         );
+      }
+   }, [choice]);
    const handleClick = (e) => {
       setChoice(e.target.getAttribute("name"));
       setTitle(e.target.getAttribute("name"));
+
       let isWorldwide = e.target.getAttribute("name") == "Worldwide";
       if (isWorldwide) {
          setWorldwideToggle(true);

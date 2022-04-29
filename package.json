@@ -27,6 +27,7 @@
     "react-moment": "^0.9.7",
     "react-scripts": "^3.4.3",
     "react-simple-maps": "^2.3.0",
+    "react-simple-snackbar": "^1.1.11",
     "react-spinners": "^0.11.0",
     "react-strap": "^0.0.1",
     "react-tooltip": "^4.2.21",
@@ -38,8 +39,8 @@
   "scripts": {
     "predeploy": "yarn run build",
     "deploy": "gh-pages -d build",
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "SET NODE_OPTIONS=--openssl-legacy-provider && react-scripts start",
+    "build": "SET NODE_OPTIONS=--openssl-legacy-provider && react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

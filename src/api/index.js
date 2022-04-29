@@ -19,16 +19,22 @@ export const fetchHistoryData = async (useState) => {
    }
 };
 
-export const fetchCountryHistoryData = async (useState, country) => {
+export const fetchCountryHistoryData = async (
+   useState,
+   country,
+   unavailableState
+) => {
    try {
       const response = await axios
          .get(`${url}/historical/${country}?lastdays=all`)
          .then((item) => {
             const data = item.data;
+            unavailableState(false);
             useState(data);
          });
    } catch (e) {
       console.log(e);
+      unavailableState(true);
    }
 };
 

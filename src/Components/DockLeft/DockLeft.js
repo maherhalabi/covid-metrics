@@ -10,6 +10,8 @@ const DockLeft = ({
    setWorldwideToggle,
    setTitle,
    worldwideData,
+   unavailableData,
+   toggleUnavailableData,
 }) => {
    const [allCountryData, setAllCountryData] = useState([]);
    const [foundCountries, setFoundCountries] = useState([]);
@@ -61,6 +63,8 @@ const DockLeft = ({
             foundCountries={foundCountries}
             choice={choice}
             worldwideData={worldwideData}
+            unavailableData={unavailableData}
+            toggleUnavailableData={toggleUnavailableData}
          />
       </div>
    );

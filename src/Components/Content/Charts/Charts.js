@@ -37,10 +37,16 @@ const Chart = ({
    setWorldwideHistory,
    countryHistory,
    setCountryHistory,
+   unavailableData,
+   toggleUnavailableData,
 }) => {
    useEffect(() => {
       if (!worldwideToggle) {
-         fetchCountryHistoryData(setCountryHistory, choice);
+         fetchCountryHistoryData(
+            setCountryHistory,
+            choice,
+            toggleUnavailableData
+         );
          // fetchVaccineTotalByCountry(setCountryHistory, choice);
       } else {
          fetchHistoryData(setWorldwideHistory);

@@ -15,6 +15,7 @@ import {
    findFirstCase,
 } from "../src/Components/Utils/Math/SumDifference";
 import "./App.css";
+import SnackbarProvider from "react-simple-snackbar";
 
 const App = () => {
    const [choice, setChoice] = useState("Worldwide");
@@ -23,6 +24,9 @@ const App = () => {
 
    const [worldwideData, setWorldwideData] = useState(0);
    const [countryData, setCountryData] = useState(0);
+
+   const [unavailableData, toggleUnavailableData] = useState(false);
+   console.log("choice", choice);
 
    const [worldwideHistory, setWorldwideHistory] = useState({
       cases: {},
@@ -131,85 +135,94 @@ const App = () => {
             width: "100vw",
          }}
       >
-         <Header title={title} />
-         <Container
-            fluid
-            style={{
-               display: "flex",
-               flexDirection: "row",
-               justifyContent: "center",
-               padding: "30px",
-            }}
-         >
-            <Row style={{ width: "100%", justifyContent: "center" }}>
-               <Col
-                  style={{
-                     height: "80vh",
-                     minWidth: "calc((100% - 100px) / 4)",
-                     maxWidth: "calc((100% - 100px) / 4)",
-                  }}
-               >
-                  <DockLeft
-                     setChoice={setChoice}
-                     worldwideData={worldwideData}
-                     choice={choice}
-                     setTitle={setTitle}
-                     setWorldwideToggle={setWorldwideToggle}
-                  />
-               </Col>
-               <Col
-                  md={6}
-                  style={{
-                     height: "80vh",
-                     minWidth: "calc((100% - 100px) / 2)",
-                     maxWidth: "calc((100% - 100px) / 2)",
-                     overflow: "hidden",
-                  }}
-               >
-                  <Content
-                     choice={choice}
-                     worldwideToggle={worldwideToggle}
-                     worldwideData={worldwideData}
-                     setWorldwideData={setWorldwideData}
-                     countryData={countryData}
-                     setCountryData={setCountryData}
-                     countryHistory={countryHistory}
-                     setCountryHistory={setCountryHistory}
-                     worldwideHistory={worldwideHistory}
-                     setWorldwideHistory={setWorldwideHistory}
-                     dataList={dataList}
-                  />
-               </Col>
-               <Col
-                  style={{
-                     height: "80vh",
-                     minWidth: "calc((100% - 100px) / 5)",
-                     maxWidth: "calc((100% - 100px) / 5)",
-                     background: "#615756",
-                     overflowY: "scroll",
-                  }}
-               >
-                  <DockRight
-                     choice={choice}
-                     worldwideToggle={worldwideToggle}
-                     worldwideData={worldwideData}
-                     setWorldwideData={setWorldwideData}
-                     countryData={countryData}
-                     setCountryData={setCountryData}
-                     countryHistory={countryHistory}
-                     setCountryHistory={setCountryHistory}
-                     worldwideHistory={worldwideHistory}
-                     setWorldwideHistory={setWorldwideHistory}
-                     setVaccinesCountry={setVaccinesCountry}
-                     setVaccinesWorldwide={setVaccinesWorldwide}
-                     vaccinesWorldwide={vaccinesWorldwide}
-                     vaccinesCountry={vaccinesCountry}
-                     dataList={dataList}
-                  />
-               </Col>
-            </Row>
-         </Container>
-         <Footer />
+         <SnackbarProvider>
+            {" "}
+            <Header title={title} />
+            <Container
+               fluid
+               style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  padding: "30px",
+               }}
+            >
+               <Row style={{ width: "100%", justifyContent: "center" }}>
+                  <Col
+                     style={{
+                        height: "80vh",
+                        minWidth: "calc((100% - 100px) / 4)",
+                        maxWidth: "calc((100% - 100px) / 4)",
+                     }}
+                  >
+                     <DockLeft
+                        setChoice={setChoice}
+                        worldwideData={worldwideData}
+                        choice={choice}
+                        setTitle={setTitle}
+                        setWorldwideToggle={setWorldwideToggle}
+                        unavailableData={unavailableData}
+                        toggleUnavailableData={toggleUnavailableData}
+                     />
+                  </Col>
+                  <Col
+                     md={6}
+                     style={{
+                        height: "80vh",
+                        minWidth: "calc((100% - 100px) / 2)",
+                        maxWidth: "calc((100% - 100px) / 2)",
+                        overflow: "hidden",
+                     }}
+                  >
+                     <Content
+                        choice={choice}
+                        worldwideToggle={worldwideToggle}
+                        worldwideData={worldwideData}
+                        setWorldwideData={setWorldwideData}
+                        countryData={countryData}
+                        setCountryData={setCountryData}
+                        countryHistory={countryHistory}
+                        setCountryHistory={setCountryHistory}
+                        worldwideHistory={worldwideHistory}
+                        setWorldwideHistory={setWorldwideHistory}
+                        dataList={dataList}
+                        unavailableData={unavailableData}
+                        toggleUnavailableData={toggleUnavailableData}
+                     />
+                  </Col>
+                  <Col
+                     style={{
+                        height: "80vh",
+                        minWidth: "calc((100% - 100px) / 5)",
+                        maxWidth: "calc((100% - 100px) / 5)",
+                        background: "#615756",
+                        overflowY: "scroll",
+                     }}
+                  >
+                     <DockRight
+                        choice={choice}
+                        worldwideToggle={worldwideToggle}
+                        worldwideData={worldwideData}
+                        setWorldwideData={setWorldwideData}
+                        countryData={countryData}
+                        setCountryData={setCountryData}
+                        countryHistory={countryHistory}
+                        setCountryHistory={setCountryHistory}
+                        worldwideHistory={worldwideHistory}
+                        setWorldwideHistory={setWorldwideHistory}
+                        setVaccinesCountry={setVaccinesCountry}
+                        setVaccinesWorldwide={setVaccinesWorldwide}
+                        vaccinesWorldwide={vaccinesWorldwide}
+                        vaccinesCountry={vaccinesCountry}
+                        dataList={dataList}
+                        unavailableData={unavailableData}
+                        toggleUnavailableData={toggleUnavailableData}
+                     />
+                  </Col>
+               </Row>
+            </Container>
+            <Footer />
+         </SnackbarProvider>
       </div>
    );
 };

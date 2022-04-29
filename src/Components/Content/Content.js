@@ -2,7 +2,6 @@ import React, { useRef, useState, useEffect } from "react";
 import { Table } from "react-bootstrap";
 import MapChart from "../Utils/MapChart/MapChart";
 import Cards from "../DockRight/Cards/Cards";
-import CapitaChart from "./Charts/CapitaChart";
 import Charts from "./Charts/Charts";
 import ReactTooltip from "react-tooltip";
 import { fetchAllCountryData } from "../../api";
@@ -20,6 +19,8 @@ const Content = ({
    countryHistory,
    setCountryHistory,
    dataList,
+   unavailableData,
+   toggleUnavailableData,
 }) => {
    const [data, setData] = useState([]);
    const [loadingHeatMap, isLoadingHeatMap] = useState(true);
@@ -45,6 +46,8 @@ const Content = ({
                setCountryHistory={setCountryHistory}
                worldwideHistory={worldwideHistory}
                setWorldwideHistory={setWorldwideHistory}
+               unavailableData={unavailableData}
+               toggleUnavailableData={toggleUnavailableData}
             />
          </div>
          <div>

@@ -37,7 +37,10 @@ const Footer = () => {
          <div className={styles.text_color}>|</div>
          <div className={styles.text_color}>|</div>
          <div className={styles.footerContent}>
-            <a className={styles.text_color} href="https://github.com/3g2">
+            <a
+               className={styles.text_color}
+               href="https://github.com/maherhalabi"
+            >
                <VscGithubAlt className={styles.logo} />
             </a>
          </div>

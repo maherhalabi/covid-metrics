@@ -16,6 +16,8 @@ const DockRight = ({
    vaccinesWorldwide,
    setVaccinesWorldwide,
    dataList,
+   unavailableData,
+   toggleUnavailableData,
 }) => {
    return (
       <div>
@@ -35,6 +37,8 @@ const DockRight = ({
             vaccinesWorldwide={vaccinesWorldwide}
             setVaccinesWorldwide={setVaccinesWorldwide}
             dataList={dataList}
+            unavailableData={unavailableData}
+            toggleUnavailableData={toggleUnavailableData}
          />
       </div>
    );

@@ -49,6 +49,8 @@ const Cards = ({
    setVaccinesCountry,
    vaccinesWorldwide,
    setVaccinesWorldwide,
+   unavailableData,
+   toggleUnavailableData,
 }) => {
    const [data, setData] = useState(0);
    useEffect(() => {
